@@ -3,6 +3,8 @@
  */
 package org.cvltvre.utils;
 
+import java.util.List;
+
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -23,29 +25,28 @@ public class CustomLocationListener implements LocationListener{
 	public static Double latitude;
 	
 
-	public static void init(Context context) {
+	public void init(Context context) {
 		locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		best = locationManager.getBestProvider(criteria, true);
+		List<String> providers=locationManager.getProviders(true);
 		Location location = locationManager.getLastKnownLocation(best);
+		if(providers.contains(locationManager.GPS_PROVIDER)){
+			best=locationManager.GPS_PROVIDER;
+		}
+		locationManager.requestLocationUpdates(best, 60000, 0, this);
+		while(location==null){
+			location = locationManager.getLastKnownLocation(best);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		longitude=location.getLongitude();
 		latitude=location.getLatitude();
 	}
 
-	/*@Override
-	protected void onResume() {
-		super.onResume();
-		// Start updates (doc recommends delay >= 60000 ms)
-		mgr.requestLocationUpdates(best, 15000, 1, this);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// Stop updates to save power while app paused
-		mgr.removeUpdates(this);
-	}
-*/
 	public void onLocationChanged(Location location) {
 		latitude=location.getLatitude();
 		longitude=location.getLongitude();
@@ -53,11 +54,19 @@ public class CustomLocationListener implements LocationListener{
 	}
 
 	public void onProviderDisabled(String provider) {
-
+		if(provider.equals(LocationManager.GPS_PROVIDER)){
+			best=locationManager.getBestProvider(new Criteria(), true);
+			locationManager.removeUpdates(this);
+			locationManager.requestLocationUpdates(best, 60000, 0, this);
+		}
 	}
 
 	public void onProviderEnabled(String provider) {
-	
+		if(provider.equals(LocationManager.GPS_PROVIDER)){
+			best=LocationManager.GPS_PROVIDER;
+			locationManager.removeUpdates(this);
+			locationManager.requestLocationUpdates(best, 60000, 0, this);
+		}
 	}
 
 	public void onStatusChanged(String provider, int status, Bundle extras) {

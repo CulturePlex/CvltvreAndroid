@@ -18,16 +18,13 @@ import android.widget.ListView;
 
 public class MainListActivity extends Activity{
 
-	/** Called when the activity is first created. */
-
-	public static List<MuseumVO> museumVOs;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ListView listMuseumView=new ListView(this);
 		//listMuseumView.setAdapter(new ArrayAdapter(this, R.layout.listmuseums, new String[]{"Hola","Adios"}));
-		listMuseumView.setAdapter(new CustomAdapter(this,museumVOs));
+		listMuseumView.setAdapter(LoadingActivity.customAdapter);
 //		listMuseumView.setOnItemClickListener(new OnItemClickListener() {
 //			@Override
 //			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,

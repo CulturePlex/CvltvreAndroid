@@ -27,13 +27,15 @@ public final class R {
         public static final int museum=0x7f02000a;
     }
     public static final class id {
+        public static final int LinearLayout1=0x7f070004;
         public static final int compass=0x7f070003;
-        public static final int imageView1=0x7f070004;
-        public static final int museumListView=0x7f070006;
+        public static final int imageView1=0x7f070005;
+        public static final int museumListView=0x7f070008;
         public static final int museumdistance=0x7f070002;
         public static final int museumname=0x7f070001;
-        public static final int tab1Layout=0x7f070005;
-        public static final int tab2Layout=0x7f070007;
+        public static final int progressBar1=0x7f070006;
+        public static final int tab1Layout=0x7f070007;
+        public static final int tab2Layout=0x7f070009;
         public static final int thumb=0x7f070000;
     }
     public static final class layout {

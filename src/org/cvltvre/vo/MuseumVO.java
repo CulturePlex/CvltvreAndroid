@@ -50,7 +50,7 @@ public class MuseumVO {
 			this.setMap_options(museum.getString("map_options"));
 			this.setEmailid(museum.getString("emailid"));
 			if(museum.has("image")){
-				this.bitmap=RestConnector.getThumb(museum.getString("image"), context);
+				//this.bitmap=RestConnector.getThumb(museum.getString("image"), context);
 				this.setImage(museum.getString("image"));
 			}
 		} catch (JSONException e) {

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout android:id="@+id/LinearLayout1"
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <ImageView android:src="@drawable/logo" android:id="@+id/imageView1" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_gravity="center"></ImageView>
+  android:baselineAligned="false" android:orientation="vertical" android:layout_height="match_parent" android:layout_gravity="center_vertical|center_horizontal|fill_vertical" android:layout_width="match_parent" android:gravity="center_vertical">
+    <ImageView android:src="@drawable/logo" android:id="@+id/imageView1" android:layout_gravity="center_horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"></ImageView>
+    <ProgressBar android:layout_width="wrap_content" style="?android:attr/progressBarStyleSmall" android:id="@+id/progressBar1" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:paddingTop="20dip"></ProgressBar>
     
 </LinearLayout>

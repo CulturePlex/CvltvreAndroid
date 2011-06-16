@@ -1,18 +1,15 @@
 package org.cvltvre.connector;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.IOUtils;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,11 +17,11 @@ import android.graphics.BitmapFactory;
 public class RestConnector {
 	
 	
-	public static String connect() {
+	public static String connect(double distance) {
 		Double latitude=CustomLocationListener.latitude;
 		Double longitude=CustomLocationListener.longitude;
 		
-		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+(latitude+0.7)+"&bottom="+(latitude-0.7)+"&left="+(longitude-0.7)+"&right="+(longitude+0.7));
+		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+(latitude+distance)+"&bottom="+(latitude-distance)+"&left="+(longitude-distance)+"&right="+(longitude+distance));
 		HttpClient client=new DefaultHttpClient();
 		try {
 			HttpResponse httpResponse=client.execute(httpGet);
