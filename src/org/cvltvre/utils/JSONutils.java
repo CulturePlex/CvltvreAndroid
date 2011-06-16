@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Location;
 
 /**
  * @author Pencerval

@@ -3,6 +3,7 @@
  */
 package org.cvltvre.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.cvltvre.R;
@@ -100,7 +101,8 @@ public class CustomAdapter extends BaseAdapter {
         // Bind the data efficiently with the holder.
         holder.name.setText(LoadingActivity.museumVOs.get(position).getTitle());
         holder.arrow.setImageBitmap(mIcon);
-        holder.distance.setText("10.0 km");
+        String distance=LoadingActivity.museumVOs.get(position).getDistance().substring(0,LoadingActivity.museumVOs.get(position).getDistance().indexOf(".")+2);
+        holder.distance.setText(distance+" Km");
         holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
         return convertView;
     }

@@ -44,7 +44,7 @@ public class LoadingActivity extends Activity {
 		customLocationListener.init(this);
 		loadingActivity=this;
 		customAdapter=new CustomAdapter(this);
-		Thread thread=new Thread(new MultiThreadRequest(handler));
+		Thread thread=new Thread(new MultiThreadRequest(handler,this));
 		thread.start();
 }
 	

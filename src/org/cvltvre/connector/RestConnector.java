@@ -18,8 +18,8 @@ public class RestConnector {
 	
 	
 	public static String connect(double distance) {
-		Double latitude=CustomLocationListener.latitude;
-		Double longitude=CustomLocationListener.longitude;
+		Double latitude=CustomLocationListener.location.getLatitude();
+		Double longitude=CustomLocationListener.location.getLongitude();
 		
 		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+(latitude+distance)+"&bottom="+(latitude-distance)+"&left="+(longitude-distance)+"&right="+(longitude+distance));
 		HttpClient client=new DefaultHttpClient();

@@ -21,8 +21,7 @@ public class CustomLocationListener implements LocationListener{
 
 	private static LocationManager locationManager;
 	private static String best;
-	public static Double longitude;
-	public static Double latitude;
+	public static Location location;
 	
 
 	public void init(Context context) {
@@ -35,23 +34,20 @@ public class CustomLocationListener implements LocationListener{
 			best=locationManager.GPS_PROVIDER;
 		}
 		locationManager.requestLocationUpdates(best, 60000, 0, this);
+		this.location=location;
 		while(location==null){
 			location = locationManager.getLastKnownLocation(best);
+			this.location=location;
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		longitude=location.getLongitude();
-		latitude=location.getLatitude();
 	}
 
 	public void onLocationChanged(Location location) {
-		latitude=location.getLatitude();
-		longitude=location.getLongitude();
-		
-	}
+		this.location=location;}
 
 	public void onProviderDisabled(String provider) {
 		if(provider.equals(LocationManager.GPS_PROVIDER)){
