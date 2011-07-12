@@ -29,6 +29,9 @@ public class CustomLocationListener implements LocationListener{
 		Criteria criteria = new Criteria();
 		best = locationManager.getBestProvider(criteria, true);
 		List<String> providers=locationManager.getProviders(true);
+		if(best==null && providers != null && providers.size()>0){
+			best=providers.get(0);
+		}
 		Location location = locationManager.getLastKnownLocation(best);
 		if(providers.contains(locationManager.GPS_PROVIDER)){
 			best=locationManager.GPS_PROVIDER;

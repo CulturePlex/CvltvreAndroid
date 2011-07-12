@@ -30,6 +30,7 @@ public final class R {
         public static final int LinearLayout1=0x7f070004;
         public static final int compass=0x7f070003;
         public static final int imageView1=0x7f070005;
+        public static final int mapview=0x7f07000a;
         public static final int museumListView=0x7f070008;
         public static final int museumdistance=0x7f070002;
         public static final int museumname=0x7f070001;
@@ -45,6 +46,7 @@ public final class R {
         public static final int main=0x7f030003;
         public static final int mainlist=0x7f030004;
         public static final int mainmap=0x7f030005;
+        public static final int museum=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f060000;

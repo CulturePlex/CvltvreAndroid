@@ -3,8 +3,11 @@
  */
 package org.cvltvre.view;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.cvltvre.R;
 import org.cvltvre.adapter.CustomAdapter;
@@ -30,7 +33,7 @@ public class LoadingActivity extends Activity {
 	 */
 	public static LoadingActivity loadingActivity;
 	public static CustomAdapter customAdapter;
-	public static List<MuseumVO> museumVOs=new LinkedList<MuseumVO>();
+	public static Map<String,MuseumVO> museumVOs=Collections.synchronizedMap(new ConcurrentHashMap<String, MuseumVO>());
 	public static Double maxDistance=1.0;
 	
 	private boolean firstData=false;
@@ -55,7 +58,6 @@ public class LoadingActivity extends Activity {
     		LoadingActivity.customAdapter.notifyDataSetChanged();
     		if(!firstData){
     			firstData=!firstData;
-    			LoadingActivity.museumVOs=museumVOs;
     			Intent intent = new Intent(loadingActivity, MainTabLayout.class);
     			startActivity(intent);
     		}
