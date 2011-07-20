@@ -6,6 +6,8 @@ package org.cvltvre.adapter;
 import java.util.List;
 
 import org.cvltvre.R;
+import org.cvltvre.view.LoadingActivity;
+import org.cvltvre.view.MainListActivity;
 import org.cvltvre.vo.MuseumVO;
 
 import android.content.Context;
@@ -25,12 +27,10 @@ import android.widget.TextView;
 public class CustomAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Bitmap mIcon;
-    private List<MuseumVO> museumVOs;
     
-    public CustomAdapter(Context context,List<MuseumVO> museumVOs) {
+    public CustomAdapter(Context context) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
-        this.museumVOs=museumVOs;
         // Icons bound to the rows.
         mIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow);
     }
@@ -42,7 +42,7 @@ public class CustomAdapter extends BaseAdapter {
      * @see android.widget.ListAdapter#getCount()
      */
     public int getCount() {
-        return museumVOs.size();
+        return LoadingActivity.museumVOs.size();
     }
 
     /**
@@ -98,10 +98,10 @@ public class CustomAdapter extends BaseAdapter {
         }
 
         // Bind the data efficiently with the holder.
-        holder.name.setText(museumVOs.get(position).getTitle());
+        holder.name.setText(LoadingActivity.museumVOs.get(position).getTitle());
         holder.arrow.setImageBitmap(mIcon);
         holder.distance.setText("10.0 km");
-        holder.thumb.setImageBitmap(museumVOs.get(position).getBitmap());
+        holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
         return convertView;
     }
 
