@@ -3,9 +3,16 @@
  */
 package org.cvltvre.adapter;
 
+import java.net.MalformedURLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.cvltvre.R;
+<<<<<<< HEAD
+=======
+import org.cvltvre.utils.ImageThreadLoader;
+import org.cvltvre.utils.ImageThreadLoader.ImageLoadedListener;
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 import org.cvltvre.view.LoadingActivity;
 import org.cvltvre.view.MainListActivity;
 import org.cvltvre.vo.MuseumVO;
@@ -13,6 +20,7 @@ import org.cvltvre.vo.MuseumVO;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +36,11 @@ public class CustomAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Bitmap mIcon;
     
+<<<<<<< HEAD
+=======
+    private ImageThreadLoader imageLoader = new ImageThreadLoader();
+    
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
     public CustomAdapter(Context context) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
@@ -96,12 +109,49 @@ public class CustomAdapter extends BaseAdapter {
             // and the ImageView.
             holder = (ViewHolder) convertView.getTag();
         }
-
+        MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
         // Bind the data efficiently with the holder.
+<<<<<<< HEAD
         holder.name.setText(LoadingActivity.museumVOs.get(position).getTitle());
         holder.arrow.setImageBitmap(mIcon);
         holder.distance.setText("10.0 km");
         holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
+=======
+        holder.name.setText(museumVO.getTitle());
+        holder.arrow.setImageBitmap(mIcon);
+        String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
+        holder.distance.setText(distance+" Km");
+        Bitmap cachedImage = null;
+        if(museumVO.getImage()==null){
+        	cachedImage=BitmapFactory.decodeResource(parent.getResources(), org.cvltvre.R.drawable.museum);
+        }else{
+        	if(museumVO.getBitmap()==null){
+        		try {
+                    cachedImage = imageLoader.loadImage("http://www.cvltvre.com/"+museumVO.getImage(), new ImageLoadedListener() {
+                    public void imageLoaded(Bitmap imageBitmap) {
+                      //museumVO.setBitmap(imageBitmap);
+                  	  //holder.thumb.setImageBitmap(imageBitmap);
+                  	  notifyDataSetChanged();                }
+                    });
+                    if(cachedImage!=null){
+                    	museumVO.setBitmap(cachedImage);
+                    }
+                  } catch (MalformedURLException e) {
+                  	Log.e(CustomAdapter.class.getName(), "Bad remote image URL: " + "http://www.cvltvre.com/"+LoadingActivity.museumVOs.get(position).getImage(), e);
+                  }
+        	}else{
+        		cachedImage=museumVO.getBitmap();
+        	}
+        	
+        }
+        if(cachedImage!=null){  
+        	holder.thumb.setImageBitmap(cachedImage);
+        }else{
+        	holder.thumb.setImageBitmap(BitmapFactory.decodeResource(parent.getResources(), org.cvltvre.R.drawable.museum));
+        }
+        
+        //holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
         return convertView;
     }
 

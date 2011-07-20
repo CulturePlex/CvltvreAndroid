@@ -2,19 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:id="@+id/tab2Layout">
-
-	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:stretchColumns="1">
-		<TableRow>
-			<TextView android:text="Setup" android:textSize="18sp"
-				android:layout_span="3" android:layout_gravity="center_horizontal" />
-		</TableRow>
-
-		<TableRow>
-			<TextView android:text="..." android:textSize="15sp"
-				android:layout_span="3" android:layout_gravity="center_horizontal" />
-		</TableRow>
-
-	</TableLayout>
+	<com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:apiKey="0NNMSqMa7E-06leCV4Y2D14OWsYdrRk3ukOuzhA"
+    />
 </RelativeLayout>

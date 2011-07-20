@@ -1,19 +1,20 @@
 package org.cvltvre.vo;
 
-import org.cvltvre.connector.RestConnector;
-import org.cvltvre.utils.JSONutils;
+import org.cvltvre.utils.CustomLocationListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 
 /**
  * @author Pencerval
  *
  */
-public class MuseumVO {
+public class MuseumVO implements Comparable{
 	
 	private String id;
 	private String phone;
@@ -28,6 +29,7 @@ public class MuseumVO {
 	private String url;
 	private String map_options;
 	private String emailid;
+	private String distance;
 	private Bitmap bitmap;
 	
 	/**
@@ -48,6 +50,13 @@ public class MuseumVO {
 			this.setContact(museum.getString("contact"));
 			this.setUrl(museum.getString("url"));
 			this.setMap_options(museum.getString("map_options"));
+			if(museum.has("map_options")){
+				String[] locationSplited=this.getMap_options().split(",");
+				Location museumLocation=new Location(LocationManager.GPS_PROVIDER);
+				museumLocation.setLatitude(Double.parseDouble(locationSplited[1]));
+				museumLocation.setLongitude(Double.parseDouble(locationSplited[0]));
+				this.setDistance(Float.toString(CustomLocationListener.location.distanceTo(museumLocation)/1000));
+			}
 			this.setEmailid(museum.getString("emailid"));
 			if(museum.has("image")){
 				//this.bitmap=RestConnector.getThumb(museum.getString("image"), context);
@@ -258,6 +267,23 @@ public class MuseumVO {
 	 */
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
+	}
+
+	public void setDistance(String distance) {
+		this.distance = distance;
+	}
+
+	public String getDistance() {
+		return distance;
+	}
+
+	public int compareTo(Object arg0) {
+		MuseumVO museumVO=(MuseumVO) arg0;
+		if(new Double(this.getDistance()).compareTo(new Double(museumVO.getDistance()))==0){
+			return this.getTitle().compareTo(museumVO.getTitle());
+		}else{
+			return new Double(this.getDistance()).compareTo(new Double(museumVO.getDistance()));
+		}
 	}
 	
 	
