@@ -27,8 +27,18 @@ public class CustomMuseumOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	public void addOverlay(OverlayItem overlay) {
-	    mOverlays.add(overlay);
-	    populate();
+		boolean exist=false;
+		for(OverlayItem item:mOverlays){
+			if(item.getTitle().equals(overlay.getTitle())){
+				exist=true;
+				break;
+			}
+		}
+		if(!exist){
+			mOverlays.add(overlay);
+		    populate();
+		
+		}
 	}
 	
 	

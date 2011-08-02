@@ -58,7 +58,7 @@ public class LoadingActivity extends Activity {
     		LoadingActivity.customAdapter.notifyDataSetChanged();
     		if(!firstData){
     			firstData=!firstData;
-    			Intent intent = new Intent(loadingActivity, MainTabLayout.class);
+    			Intent intent = new Intent(loadingActivity, MainTabActivity.class);
     			startActivity(intent);
     		}
         }

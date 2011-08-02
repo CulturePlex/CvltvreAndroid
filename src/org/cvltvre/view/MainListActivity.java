@@ -12,7 +12,11 @@ import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.vo.MuseumVO;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
@@ -25,6 +29,20 @@ public class MainListActivity extends Activity{
 		ListView listMuseumView=new ListView(this);
 		//listMuseumView.setAdapter(new ArrayAdapter(this, R.layout.listmuseums, new String[]{"Hola","Adios"}));
 		listMuseumView.setAdapter(LoadingActivity.customAdapter);
+		listMuseumView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Intent intent = new Intent(MainListActivity.this, MuseumMainActivity.class);
+				intent.putExtra("id", (String)LoadingActivity.museumVOs.keySet().toArray()[position]);
+				startActivity(intent);
+				
+			}
+			
+			
+			
+		});
+		
 //		listMuseumView.setOnItemClickListener(new OnItemClickListener() {
 //			@Override
 //			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,

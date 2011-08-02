@@ -42,7 +42,7 @@ public class RestConnector {
 	}
 	
 	public static String connect(BigDecimal top,BigDecimal right,BigDecimal botom,BigDecimal left) {
-		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+top.round(new MathContext(9))+"&bottom="+botom.round(new MathContext(9))+"&left="+left.round(new MathContext(9))+"&right="+right.round(new MathContext(9)));
+		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+top.round(new MathContext(5))+"&bottom="+botom.round(new MathContext(5))+"&left="+left.round(new MathContext(5))+"&right="+right.round(new MathContext(5)));
 		HttpClient client=new DefaultHttpClient();
 		try {
 			HttpResponse httpResponse=client.execute(httpGet);
@@ -50,7 +50,7 @@ public class RestConnector {
 			InputStream stream=entity.getContent();
 			String response=IOUtils.toString(stream);
 			//Log.d(RestConnector.class.getName(), "Request:\n"+"http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+top.round(new MathContext(3)).floatValue()+"&bottom="+botom+"&left="+left.round(new MathContext(3)).floatValue()+"&right="+right.round(new MathContext(3)).floatValue()+"\nResponse:\n"+response);
-			Log.d(RestConnector.class.getName(), "Request:\n"+"http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+top.round(new MathContext(9))+"&bottom="+botom.round(new MathContext(9))+"&left="+left.round(new MathContext(9))+"&right="+right.round(new MathContext(9))+"\nResponse:\n"+response);
+			Log.d(RestConnector.class.getName(), "Request:\n"+"http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+top.round(new MathContext(5))+"&bottom="+botom.round(new MathContext(5))+"&left="+left.round(new MathContext(5))+"&right="+right.round(new MathContext(5))+"\nResponse:\n"+response);
 			return response;
 		} catch (Exception e) {
 			e.printStackTrace();

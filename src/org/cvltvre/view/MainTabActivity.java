@@ -15,7 +15,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TabHost;
 
-public class MainTabLayout extends TabActivity {
+public class MainTabActivity extends TabActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

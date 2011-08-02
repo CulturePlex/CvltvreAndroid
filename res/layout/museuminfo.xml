@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_margin="5dip" android:layout_gravity="center|center_horizontal" android:src="@drawable/museum" android:layout_width="50dip" android:id="@+id/museumimage" android:layout_height="50dip"></ImageView>
+        <TextView android:layout_margin="5dip" android:id="@+id/museumname" android:gravity="center_horizontal" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="match_parent" android:text="TextView" android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/museumdistancelabel" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/distance" android:layout_marginLeft="5dip" android:layout_marginTop="5dip" android:textColor="@color/grey"></TextView>
+        <TextView android:id="@+id/museumdistance" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:layout_marginLeft="5dip" android:layout_marginRight="5dip" android:layout_marginTop="5dip"></TextView>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/LinearLayout03" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/TextView06" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/phone" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
+        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:id="@+id/museumphone" android:layout_marginLeft="5dip" android:layout_marginRight="5dip"></TextView>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/LinearLayout02" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/TextView04" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/website" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
+        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:id="@+id/museumwebsite" android:layout_marginLeft="5dip" android:layout_marginRight="5dip" ></TextView>
+    </LinearLayout>
+    <TextView android:id="@+id/TextView02" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="@string/description" android:layout_height="wrap_content" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
+    <TextView android:id="@+id/museumdescription" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_marginRight="5dip" android:layout_marginLeft="5dip" android:layout_height="wrap_content" android:scrollbars="vertical"></TextView>
+    
+</LinearLayout>

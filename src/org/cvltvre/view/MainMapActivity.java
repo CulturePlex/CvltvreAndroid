@@ -4,6 +4,7 @@
  */
 package org.cvltvre.view;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.cvltvre.R;
 import org.cvltvre.R.layout;
 import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.CustomMuseumOverlay;
+import org.cvltvre.vo.MuseumVO;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -26,10 +28,12 @@ import android.os.Bundle;
 public class MainMapActivity extends MapActivity {
 	
 	MapView mapView;
-	private static Drawable drawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.museum);
+	private static Drawable museumDrawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.museummap);
+	private static Drawable personDrawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.person);
 	public static List<Overlay> mapOverlays;
 	
-	public static CustomMuseumOverlay itemizedOverlay= new CustomMuseumOverlay(drawable);;
+	public static CustomMuseumOverlay museumOverlay= new CustomMuseumOverlay(museumDrawable);
+	public static CustomMuseumOverlay personOverlay= new CustomMuseumOverlay(personDrawable);
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,9 +53,28 @@ public class MainMapActivity extends MapActivity {
 				int latitude = (int) (CustomLocationListener.location.getLatitude() * 1000000);
 				int longitude = (int) (CustomLocationListener.location.getLongitude() * 1000000);
 				
-				OverlayItem overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), "ola", "adios");
-				MainMapActivity.itemizedOverlay.addOverlay(overlayItem);
-				MainMapActivity.mapOverlays.add(MainMapActivity.itemizedOverlay);
+				OverlayItem overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), "user", "user");
+				MainMapActivity.personOverlay.addOverlay(overlayItem);
+				MainMapActivity.mapOverlays.add(MainMapActivity.personOverlay);
+				MainMapActivity.mapOverlays.add(MainMapActivity.museumOverlay);
+				while(true){
+					if(LoadingActivity.museumVOs.size()>0){
+						for(MuseumVO museumVO:LoadingActivity.museumVOs.values()){
+							String[] coords=museumVO.getMap_options().split(",");
+							latitude = (int) (new BigDecimal(coords[1]).doubleValue() * 1000000);
+							longitude = (int) (new BigDecimal(coords[0]).doubleValue() * 1000000);
+							overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), museumVO.getTitle(), museumVO.getTitle());
+							MainMapActivity.museumOverlay.addOverlay(overlayItem);
+						}
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				
 				
 			}
 		});

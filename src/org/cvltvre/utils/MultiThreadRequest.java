@@ -25,8 +25,8 @@ public class MultiThreadRequest implements Runnable {
 	private Handler handler;
 	private static boolean isBusy = false;
 	private static int busy = 0;
-	private static Double startDistance=0.1;
-	private static BigDecimal dotOne=new BigDecimal(0.1);
+	//private static Double startDistance=0.1;
+	private static BigDecimal dotOne=new BigDecimal(0.3);
 
 	Context context;
 
@@ -103,11 +103,11 @@ public class MultiThreadRequest implements Runnable {
 	public void doMatrix(BigDecimal size,BigDecimal top,BigDecimal right,BigDecimal bottom,BigDecimal left) throws JSONException{
 		if(LoadingActivity.museumVOs.size()<20){
 			if(size==dotOne){
-				BigDecimal diferenceSize=new BigDecimal(0.05);
+				BigDecimal diferenceSize=new BigDecimal(0.15);
 				makeThreadRequest(top.add(diferenceSize),right.add(diferenceSize),bottom.subtract(diferenceSize),left.subtract(diferenceSize));
 				doMatrix(size.add(diferenceSize), top.add(diferenceSize), right.add(diferenceSize),bottom.subtract(diferenceSize),left.subtract(diferenceSize));
 			}else{
-				BigDecimal diferenceSize=size.subtract(new BigDecimal(0.05));
+				BigDecimal diferenceSize=size.subtract(new BigDecimal(0.15));
 				makeThreadRequest(top.add(diferenceSize),right.add(diferenceSize),bottom.add(diferenceSize),left.add(diferenceSize));
 				makeThreadRequest(top.subtract(diferenceSize),right.subtract(diferenceSize),bottom.subtract(diferenceSize),left.subtract(diferenceSize));
 				makeThreadRequest(top.add(diferenceSize),right.subtract(diferenceSize),bottom.add(diferenceSize),left.subtract(diferenceSize));

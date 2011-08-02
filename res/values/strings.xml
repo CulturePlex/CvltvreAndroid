@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cvltvre</string>
+    <string name="distance">Distance:</string>
+    <string name="address">Address:</string>
+    <string name="phone">Phone:</string>
+    <string name="description">Description:</string>
+    <string name="website">Website:</string>
+    <color name="grey">#ff888888</color>
 </resources>

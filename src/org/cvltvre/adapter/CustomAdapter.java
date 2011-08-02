@@ -95,6 +95,7 @@ public class CustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.museumname);
             holder.distance = (TextView) convertView.findViewById(R.id.museumdistance);
+            holder.distance.setTextColor(R.color.grey);
             holder.arrow = (ImageView) convertView.findViewById(R.id.compass);
             holder.thumb=(ImageView) convertView.findViewById(R.id.thumb);
             convertView.setTag(holder);
@@ -103,9 +104,12 @@ public class CustomAdapter extends BaseAdapter {
             // and the ImageView.
             holder = (ViewHolder) convertView.getTag();
         }
-        MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
+        //MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
+        MuseumVO museumVO=LoadingActivity.museumVOs.get(position);
+        
         // Bind the data efficiently with the holder.
         holder.name.setText(museumVO.getTitle());
+        //holder.name.setTextColor()
         holder.arrow.setImageBitmap(mIcon);
         String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
         holder.distance.setText(distance+" Km");
