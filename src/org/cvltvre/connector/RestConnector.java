@@ -13,10 +13,7 @@ import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.IOUtils;
 import org.cvltvre.view.LoadingActivity;
 
-<<<<<<< HEAD
-=======
 import android.app.AlertDialog;
->>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,13 +24,8 @@ public class RestConnector {
 	
 	
 	public static String connect(double distance) {
-<<<<<<< HEAD
-		Double latitude=CustomLocationListener.latitude;
-		Double longitude=CustomLocationListener.longitude;
-=======
 		Double latitude=CustomLocationListener.location.getLatitude();
 		Double longitude=CustomLocationListener.location.getLongitude();
->>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 		
 		HttpGet httpGet=new HttpGet("http://www.cvltvre.com/pg/api/rest/json/?method=museum.get_geo_by_coordinates&top="+(latitude+distance)+"&bottom="+(latitude-distance)+"&left="+(longitude-distance)+"&right="+(longitude+distance));
 		HttpClient client=new DefaultHttpClient();

@@ -8,11 +8,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import org.cvltvre.R;
-<<<<<<< HEAD
-=======
 import org.cvltvre.utils.ImageThreadLoader;
 import org.cvltvre.utils.ImageThreadLoader.ImageLoadedListener;
->>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 import org.cvltvre.view.LoadingActivity;
 import org.cvltvre.view.MainListActivity;
 import org.cvltvre.vo.MuseumVO;
@@ -36,11 +33,8 @@ public class CustomAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Bitmap mIcon;
     
-<<<<<<< HEAD
-=======
     private ImageThreadLoader imageLoader = new ImageThreadLoader();
     
->>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
     public CustomAdapter(Context context) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
@@ -110,16 +104,10 @@ public class CustomAdapter extends BaseAdapter {
             // and the ImageView.
             holder = (ViewHolder) convertView.getTag();
         }
-        //MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
-        MuseumVO museumVO=LoadingActivity.museumVOs.get(position);
+        MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
+        //MuseumVO museumVO=LoadingActivity.museumVOs.get(position);
         
         // Bind the data efficiently with the holder.
-<<<<<<< HEAD
-        holder.name.setText(LoadingActivity.museumVOs.get(position).getTitle());
-        holder.arrow.setImageBitmap(mIcon);
-        holder.distance.setText("10.0 km");
-        holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
-=======
         holder.name.setText(museumVO.getTitle());
         //holder.name.setTextColor()
         holder.arrow.setImageBitmap(mIcon);
@@ -155,7 +143,6 @@ public class CustomAdapter extends BaseAdapter {
         }
         
         //holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
->>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
         return convertView;
     }
 
