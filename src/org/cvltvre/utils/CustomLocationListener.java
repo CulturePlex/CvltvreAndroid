@@ -29,24 +29,37 @@ public class CustomLocationListener implements LocationListener{
 		Criteria criteria = new Criteria();
 		best = locationManager.getBestProvider(criteria, true);
 		List<String> providers=locationManager.getProviders(true);
+<<<<<<< HEAD
+=======
 		if(best==null && providers != null && providers.size()>0){
 			best=providers.get(0);
 		}
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 		Location location = locationManager.getLastKnownLocation(best);
 		if(providers.contains(locationManager.GPS_PROVIDER)){
 			best=locationManager.GPS_PROVIDER;
 		}
 		locationManager.requestLocationUpdates(best, 60000, 0, this);
+<<<<<<< HEAD
+		while(location==null){
+			location = locationManager.getLastKnownLocation(best);
+=======
 		this.location=location;
 		while(location==null){
 			location = locationManager.getLastKnownLocation(best);
 			this.location=location;
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+<<<<<<< HEAD
+		longitude=location.getLongitude();
+		latitude=location.getLatitude();
+=======
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 	}
 
 	public void onLocationChanged(Location location) {

@@ -33,7 +33,11 @@ public class LoadingActivity extends Activity {
 	 */
 	public static LoadingActivity loadingActivity;
 	public static CustomAdapter customAdapter;
+<<<<<<< HEAD
+	public static List<MuseumVO> museumVOs=new LinkedList<MuseumVO>();
+=======
 	public static Map<String,MuseumVO> museumVOs=Collections.synchronizedMap(new ConcurrentHashMap<String, MuseumVO>());
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 	public static Double maxDistance=1.0;
 	
 	private boolean firstData=false;
@@ -47,7 +51,11 @@ public class LoadingActivity extends Activity {
 		customLocationListener.init(this);
 		loadingActivity=this;
 		customAdapter=new CustomAdapter(this);
+<<<<<<< HEAD
+		Thread thread=new Thread(new MultiThreadRequest(handler));
+=======
 		Thread thread=new Thread(new MultiThreadRequest(handler,this));
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 		thread.start();
 }
 	
@@ -58,7 +66,15 @@ public class LoadingActivity extends Activity {
     		LoadingActivity.customAdapter.notifyDataSetChanged();
     		if(!firstData){
     			firstData=!firstData;
+<<<<<<< HEAD
     			Intent intent = new Intent(loadingActivity, MainTabActivity.class);
+=======
+<<<<<<< HEAD
+    			LoadingActivity.museumVOs=museumVOs;
+=======
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
+    			Intent intent = new Intent(loadingActivity, MainTabLayout.class);
+>>>>>>> 06070ab4bce17cb6868d3462bdb93e09534a658d
     			startActivity(intent);
     		}
         }

@@ -1,11 +1,33 @@
 package org.cvltvre.utils;
 
+<<<<<<< HEAD
+=======
 import java.math.BigDecimal;
 import java.util.Collections;
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 import java.util.List;
 
 import org.cvltvre.connector.RestConnector;
 import org.cvltvre.view.LoadingActivity;
+<<<<<<< HEAD
+import org.cvltvre.vo.MuseumVO;
+import org.json.JSONException;
+
+import android.app.AlertDialog;
+import android.os.Handler;
+
+public class MultiThreadRequest implements Runnable {
+
+	Handler handler;
+	private static boolean isBusy = true;
+	private static Double startDistance=0.1;
+
+	public MultiThreadRequest(Handler handler) {
+		this.handler=handler;
+	}
+
+	public void run() {
+=======
 import org.cvltvre.view.MainMapActivity;
 import org.cvltvre.vo.MuseumVO;
 import org.json.JSONException;
@@ -45,6 +67,7 @@ public class MultiThreadRequest implements Runnable {
 	}
 	
 	/*public void run() {
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 		while(startDistance<LoadingActivity.maxDistance && LoadingActivity.museumVOs.size()<15){
 			isBusy=true;
 			Thread thread = new Thread() {
@@ -55,7 +78,10 @@ public class MultiThreadRequest implements Runnable {
 						String response = RestConnector.connect(startDistance);
 						List<MuseumVO> museumVOs = JSONutils.getMuseumsFromResponseString(response,LoadingActivity.loadingActivity);
 						if(museumVOs.size()>LoadingActivity.museumVOs.size()){
+<<<<<<< HEAD
+=======
 							Collections.sort(museumVOs); 
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 							LoadingActivity.museumVOs = museumVOs;
 							handler.sendEmptyMessage(1);
 						}
@@ -74,6 +100,10 @@ public class MultiThreadRequest implements Runnable {
 			startDistance=startDistance+0.1;
 		}
 		
+<<<<<<< HEAD
+
+	}
+=======
 		getImages(LoadingActivity.museumVOs);
 	}
 	*/
@@ -88,6 +118,7 @@ public class MultiThreadRequest implements Runnable {
 		}
 	}
 	*/
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 
 	public void waitNextRadius() {
 		while (isBusy) {
@@ -98,6 +129,8 @@ public class MultiThreadRequest implements Runnable {
 			}
 		}
 	}
+<<<<<<< HEAD
+=======
 	
 	
 	public void doMatrix(BigDecimal size,BigDecimal top,BigDecimal right,BigDecimal bottom,BigDecimal left) throws JSONException{
@@ -171,4 +204,5 @@ public class MultiThreadRequest implements Runnable {
 		}
 		
 	}
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
 }

@@ -38,9 +38,15 @@ public final class R {
         public static final int TextView06=0x7f070010;
         public static final int compass=0x7f070003;
         public static final int imageView1=0x7f070005;
+<<<<<<< HEAD
         public static final int linearLayout1=0x7f07000b;
         public static final int linearLayout2=0x7f07000d;
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 06070ab4bce17cb6868d3462bdb93e09534a658d
         public static final int mapview=0x7f07000a;
+>>>>>>> 945320dd6af3acf2ad31193039c7d66e30b23f62
         public static final int museumListView=0x7f070008;
         public static final int museumdescription=0x7f070016;
         public static final int museumdistance=0x7f070002;
