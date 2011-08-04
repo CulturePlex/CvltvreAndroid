@@ -18,7 +18,12 @@ public class MuseumMainActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.museuminfo);
-		MuseumVO museumVO=LoadingActivity.museumVOs.get(this.getIntent().getExtras().get("id"));
+		MuseumVO museumVO=null;
+		for(MuseumVO museumVOTemporal:LoadingActivity.museumVOs){
+			if(museumVOTemporal.getId().equals(this.getIntent().getExtras().get("id"))){
+				museumVO=museumVOTemporal;
+			}
+		}
 		TextView name=(TextView) findViewById(R.id.museumname);
 		name.setText(museumVO.getTitle());
 		if(museumVO.getBitmap()!=null){

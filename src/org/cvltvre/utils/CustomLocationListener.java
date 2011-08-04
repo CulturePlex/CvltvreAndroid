@@ -51,9 +51,12 @@ public class CustomLocationListener implements LocationListener{
 		//longitude=location.getLongitude();
 		//latitude=location.getLatitude();
 	}
+	
+	
 
 	public void onLocationChanged(Location location) {
-		this.location=location;}
+		this.location=location;
+		}
 
 	public void onProviderDisabled(String provider) {
 		if(provider.equals(LocationManager.GPS_PROVIDER)){

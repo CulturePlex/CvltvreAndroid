@@ -59,7 +59,7 @@ public class MainMapActivity extends MapActivity {
 				MainMapActivity.mapOverlays.add(MainMapActivity.museumOverlay);
 				while(true){
 					if(LoadingActivity.museumVOs.size()>0){
-						for(MuseumVO museumVO:LoadingActivity.museumVOs.values()){
+						for(MuseumVO museumVO:LoadingActivity.museumVOs){
 							String[] coords=museumVO.getMap_options().split(",");
 							latitude = (int) (new BigDecimal(coords[1]).doubleValue() * 1000000);
 							longitude = (int) (new BigDecimal(coords[0]).doubleValue() * 1000000);

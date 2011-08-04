@@ -104,7 +104,7 @@ public class CustomAdapter extends BaseAdapter {
             // and the ImageView.
             holder = (ViewHolder) convertView.getTag();
         }
-        MuseumVO museumVO=LoadingActivity.museumVOs.get(LoadingActivity.museumVOs.keySet().toArray()[position]);
+        MuseumVO museumVO=(MuseumVO) LoadingActivity.museumVOs.toArray()[position];
         //MuseumVO museumVO=LoadingActivity.museumVOs.get(position);
         
         // Bind the data efficiently with the holder.
@@ -129,7 +129,7 @@ public class CustomAdapter extends BaseAdapter {
                     	museumVO.setBitmap(cachedImage);
                     }
                   } catch (MalformedURLException e) {
-                  	Log.e(CustomAdapter.class.getName(), "Bad remote image URL: " + "http://www.cvltvre.com/"+LoadingActivity.museumVOs.get(position).getImage(), e);
+                  	Log.e(CustomAdapter.class.getName(), "Bad remote image URL: " + "http://www.cvltvre.com/"+((MuseumVO)LoadingActivity.museumVOs.toArray()[position]).getImage(), e);
                   }
         	}else{
         		cachedImage=museumVO.getBitmap();

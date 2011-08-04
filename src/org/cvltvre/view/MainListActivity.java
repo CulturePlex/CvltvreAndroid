@@ -34,7 +34,7 @@ public class MainListActivity extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				Intent intent = new Intent(MainListActivity.this, MuseumMainActivity.class);
-				intent.putExtra("id", (String)LoadingActivity.museumVOs.keySet().toArray()[position]);
+				intent.putExtra("id", (String)((MuseumVO)LoadingActivity.museumVOs.toArray()[position]).getId());
 				startActivity(intent);
 				
 			}

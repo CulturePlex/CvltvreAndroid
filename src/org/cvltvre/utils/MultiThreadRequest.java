@@ -1,7 +1,11 @@
 package org.cvltvre.utils;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.cvltvre.connector.RestConnector;
 import org.cvltvre.view.LoadingActivity;
@@ -141,13 +145,18 @@ public class MultiThreadRequest implements Runnable {
 						List<MuseumVO> museumVOs = JSONutils.getMuseumsFromResponseString(response,LoadingActivity.loadingActivity);
 						if(museumVOs.size()>0){
 							for(MuseumVO museumVO:museumVOs){
-								if(!LoadingActivity.museumVOs.containsKey(museumVO.getId())){
-									LoadingActivity.museumVOs.put(museumVO.getId(), museumVO);
+								boolean exist=false;
+								for(MuseumVO museumVO2:LoadingActivity.museumVOs){
+									if(museumVO.getId().equals(museumVO2.getId())){
+										exist=true;
+										break;
+									}
+								}
+								if(!exist){
+									LoadingActivity.museumVOs.add(museumVO);
+									handler.sendEmptyMessage(1);
 								}
 							}
-							//Collections.sort(LoadingActivity.museumVOs);
-							handler.sendEmptyMessage(1);
-							//getImages(museumVOs);
 						}
 						isBusy=false;
 					} catch (JSONException e) {
@@ -164,4 +173,7 @@ public class MultiThreadRequest implements Runnable {
 		}
 		
 	}
+	
+	
+	
 }
