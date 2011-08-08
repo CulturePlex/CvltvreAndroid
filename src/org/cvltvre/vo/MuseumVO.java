@@ -14,7 +14,7 @@ import android.util.Log;
  * @author Pencerval
  *
  */
-public class MuseumVO implements Comparable{
+public class MuseumVO{
 	
 	private String id;
 	private String phone;
@@ -50,13 +50,6 @@ public class MuseumVO implements Comparable{
 			this.setContact(museum.getString("contact"));
 			this.setUrl(museum.getString("url"));
 			this.setMap_options(museum.getString("map_options"));
-			if(museum.has("map_options")){
-				String[] locationSplited=this.getMap_options().split(",");
-				Location museumLocation=new Location(LocationManager.GPS_PROVIDER);
-				museumLocation.setLatitude(Double.parseDouble(locationSplited[1]));
-				museumLocation.setLongitude(Double.parseDouble(locationSplited[0]));
-				this.setDistance(Float.toString(CustomLocationListener.location.distanceTo(museumLocation)/1000));
-			}
 			this.setEmailid(museum.getString("emailid"));
 			if(museum.has("image")){
 				//this.bitmap=RestConnector.getThumb(museum.getString("image"), context);
@@ -269,12 +262,16 @@ public class MuseumVO implements Comparable{
 		this.bitmap = bitmap;
 	}
 
-	public void setDistance(String distance) {
-		this.distance = distance;
-	}
-
 	public String getDistance() {
-		return distance;
+		if(this.getMap_options()!=null && this.getMap_options()!=""){
+			String[] locationSplited=this.getMap_options().split(",");
+			Location museumLocation=new Location(LocationManager.GPS_PROVIDER);
+			museumLocation.setLatitude(Double.parseDouble(locationSplited[1]));
+			museumLocation.setLongitude(Double.parseDouble(locationSplited[0]));
+			return Float.toString(CustomLocationListener.location.distanceTo(museumLocation)/1000);
+		}else{
+			return "";
+		}
 	}
 
 	public int compareTo(Object arg0) {

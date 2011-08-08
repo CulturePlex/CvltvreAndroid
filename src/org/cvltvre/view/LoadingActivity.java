@@ -6,13 +6,13 @@ package org.cvltvre.view;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.cvltvre.R;
 import org.cvltvre.adapter.CustomAdapter;
 import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.MultiThreadRequest;
+import org.cvltvre.utils.SensorHandler;
 import org.cvltvre.vo.MuseumVO;
 
 import android.app.Activity;
@@ -46,12 +46,14 @@ public class LoadingActivity extends Activity {
 	public static Double maxDistance=1.0;
 	
 	private boolean firstData=false;
+	private SensorHandler sensorHandler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading);
+		sensorHandler=new SensorHandler(handler,this.getApplicationContext());
 		CustomLocationListener customLocationListener=new CustomLocationListener();
 		LocationManager locationManager=(LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, customLocationListener);
@@ -60,13 +62,6 @@ public class LoadingActivity extends Activity {
 		customAdapter=new CustomAdapter(this);
 		Thread thread=new Thread(new MultiThreadRequest(handler,this));
 		thread.start();
-		new TreeMap<String, MuseumVO>(new Comparator<String>() {
-
-			public int compare(String object1, String object2) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		});
 }
 	
 	

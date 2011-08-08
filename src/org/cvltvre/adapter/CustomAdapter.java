@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.cvltvre.R;
 import org.cvltvre.utils.ImageThreadLoader;
+import org.cvltvre.utils.SensorHandler;
 import org.cvltvre.utils.ImageThreadLoader.ImageLoadedListener;
 import org.cvltvre.view.LoadingActivity;
 import org.cvltvre.view.MainListActivity;
@@ -17,12 +18,15 @@ import org.cvltvre.vo.MuseumVO;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 /**
@@ -98,6 +102,7 @@ public class CustomAdapter extends BaseAdapter {
             holder.distance.setTextColor(R.color.grey);
             holder.arrow = (ImageView) convertView.findViewById(R.id.compass);
             holder.thumb=(ImageView) convertView.findViewById(R.id.thumb);
+            holder.compass=(ImageView)convertView.findViewById(R.id.compass);
             convertView.setTag(holder);
         } else {
             // Get the ViewHolder back to get fast access to the TextView
@@ -110,9 +115,23 @@ public class CustomAdapter extends BaseAdapter {
         // Bind the data efficiently with the holder.
         holder.name.setText(museumVO.getTitle());
         //holder.name.setTextColor()
-        holder.arrow.setImageBitmap(mIcon);
+        //holder.arrow.setImageBitmap(mIcon);
         String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
         holder.distance.setText(distance+" Km");
+        
+        int compassHeading =0;
+        if(SensorHandler.updated){
+        	compassHeading= Float.valueOf(SensorHandler.mValues[0]).intValue();
+        }
+        Bitmap arrow = mIcon;
+        Matrix matrix=new Matrix();
+        matrix.preRotate(compassHeading);
+        //matrix.setScale(1, 1);
+        Bitmap rotateArrow = Bitmap.createBitmap(arrow, 0, 0,arrow.getWidth(), arrow.getHeight(), matrix, true);
+        BitmapDrawable bmdArrow = new BitmapDrawable(rotateArrow);
+        //holder.compass.setScaleType(ScaleType.MATRIX);
+        holder.compass.setImageDrawable(bmdArrow);
+        
         Bitmap cachedImage = null;
         if(museumVO.getImage()==null){
         	cachedImage=BitmapFactory.decodeResource(parent.getResources(), org.cvltvre.R.drawable.museum);
@@ -151,6 +170,7 @@ public class CustomAdapter extends BaseAdapter {
         TextView distance;
         ImageView arrow;
         ImageView thumb;
+        ImageView compass;
         
     }
 
