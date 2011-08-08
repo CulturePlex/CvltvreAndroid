@@ -69,11 +69,12 @@ public class LoadingActivity extends Activity {
     final Handler handler = new Handler() {
     	public void handleMessage(Message msg) {
     		LoadingActivity.customAdapter.notifyDataSetChanged();
-    		if(!firstData){
-    			firstData=!firstData;
+    		if(msg.what == 1 && !firstData){
+    			firstData=true;
     			Intent intent = new Intent(loadingActivity, MainTabActivity.class);
     			startActivity(intent);
     		}
         }
     };
+    
 }

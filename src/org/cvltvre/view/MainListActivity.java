@@ -38,9 +38,6 @@ public class MainListActivity extends Activity{
 				startActivity(intent);
 				
 			}
-			
-			
-			
 		});
 		
 //		listMuseumView.setOnItemClickListener(new OnItemClickListener() {
@@ -64,5 +61,6 @@ public class MainListActivity extends Activity{
 		addContentView(listMuseumView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 	}
+
 
 }

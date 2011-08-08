@@ -28,7 +28,7 @@ public class MultiThreadRequest implements Runnable {
 	Context context;
 
 	public MultiThreadRequest(Handler handler,Context context) {
-		this.context=context;
+		this.context=context.getApplicationContext();
 		this.handler=handler;
 	}
 
