@@ -5,58 +5,37 @@ package org.cvltvre.utils;
 
 import java.util.List;
 
+import org.cvltvre.view.LoadingActivity;
+
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Looper;
 
 /**
  * @author Pencerval
  *
  */
-public class CustomLocationListener implements LocationListener{
+public class CustomLocationListener implements LocationListener, Runnable{
 
 	private static LocationManager locationManager;
 	private static String best;
 	public static Location location;
+	private static Context context;
 	
-
-	public void init(Context context) {
-		locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
-		best = locationManager.getBestProvider(criteria, true);
-		List<String> providers=locationManager.getProviders(true);
-		
-		if(best==null && providers != null && providers.size()>0){
-			best=providers.get(0);
-		}
-		Location location = locationManager.getLastKnownLocation(best);
-		if(providers.contains(locationManager.GPS_PROVIDER)){
-			best=locationManager.GPS_PROVIDER;
-		}
-		locationManager.requestLocationUpdates(best, 60000, 0, this);
-		this.location=location;
-		while(this.location==null){
-			location = locationManager.getLastKnownLocation(best);
-			this.location=location;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		//longitude=location.getLongitude();
-		//latitude=location.getLatitude();
+	public CustomLocationListener(Context context) {
+		super();
+		CustomLocationListener.context=context;
 	}
-	
 	
 
 	public void onLocationChanged(Location location) {
-		this.location=location;
-		}
+		CustomLocationListener.location=location;
+		LoadingActivity.locationRetrieve=true;
+	}
 
 	public void onProviderDisabled(String provider) {
 		if(provider.equals(LocationManager.GPS_PROVIDER)){
@@ -76,6 +55,38 @@ public class CustomLocationListener implements LocationListener{
 
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	
+	}
+
+
+
+	public void run() {
+		Looper.prepare();
+		locationManager=(LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		
+
+		Criteria criteria = new Criteria();
+		best = locationManager.getBestProvider(criteria, true);
+		List<String> providers=locationManager.getProviders(true);
+		
+		if(best==null && providers != null && providers.size()>0){
+			best=providers.get(0);
+		}
+		if(providers.contains(LocationManager.GPS_PROVIDER)){
+			best=LocationManager.GPS_PROVIDER;
+		}
+		Location location = locationManager.getLastKnownLocation(best);
+		locationManager.requestLocationUpdates(best, 2000, 0, this);
+		CustomLocationListener.location=location;
+		while(CustomLocationListener.location==null){
+			location = locationManager.getLastKnownLocation(best);
+			CustomLocationListener.location=location;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		LoadingActivity.locationRetrieve=true;
 	}
 
 }

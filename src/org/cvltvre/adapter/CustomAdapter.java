@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import org.cvltvre.R;
+import org.cvltvre.utils.Geometry;
 import org.cvltvre.utils.ImageThreadLoader;
 import org.cvltvre.utils.SensorHandler;
 import org.cvltvre.utils.ImageThreadLoader.ImageLoadedListener;

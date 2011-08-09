@@ -46,22 +46,20 @@ public class LoadingActivity extends Activity {
 	public static Double maxDistance=1.0;
 	
 	private boolean firstData=false;
-	private SensorHandler sensorHandler;
+	public static boolean locationRetrieve=false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading);
-		sensorHandler=new SensorHandler(handler,this.getApplicationContext());
-		CustomLocationListener customLocationListener=new CustomLocationListener();
-		LocationManager locationManager=(LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, customLocationListener);
-		customLocationListener.init(this);
+		new SensorHandler(handler,this.getApplicationContext());
 		loadingActivity=this;
 		customAdapter=new CustomAdapter(this);
-		Thread thread=new Thread(new MultiThreadRequest(handler,this));
-		thread.start();
+		Thread threadForLocation=new Thread(new CustomLocationListener(this.getApplicationContext()));
+		threadForLocation.start();
+		Thread threadForMuseums=new Thread(new MultiThreadRequest(handler,this));
+		threadForMuseums.start();
 }
 	
 	

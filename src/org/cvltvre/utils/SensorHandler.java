@@ -16,7 +16,7 @@ public class SensorHandler implements SensorEventListener {
 	
 	public static float[] mValues;
 	public static boolean updated=false;
-	private static Handler handler=null;
+	private Handler handler=null;
 
 	public SensorHandler(Handler handler, Context context) {
 		mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);

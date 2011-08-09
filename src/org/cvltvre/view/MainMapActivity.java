@@ -5,14 +5,15 @@
 package org.cvltvre.view;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.cvltvre.R;
-import org.cvltvre.R.layout;
 import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.CustomMuseumOverlay;
 import org.cvltvre.vo.MuseumVO;
+
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -20,10 +21,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
-
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 
 public class MainMapActivity extends MapActivity {
 	

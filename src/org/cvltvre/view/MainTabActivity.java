@@ -5,13 +5,10 @@
 package org.cvltvre.view;
 
 import org.cvltvre.R;
-import org.cvltvre.R.drawable;
-import org.cvltvre.R.layout;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TabHost;
 
