@@ -7,4 +7,6 @@
     <string name="description">Description:</string>
     <string name="website">Website:</string>
     <color name="grey">#ff888888</color>
+    <string name="phonecall">Call</string>
+    <string name="wsbsitebutton">Website</string>
 </resources>

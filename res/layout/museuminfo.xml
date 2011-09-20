@@ -4,23 +4,28 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="wrap_content">
-        <ImageView android:layout_margin="5dip" android:layout_gravity="center|center_horizontal" android:src="@drawable/museum" android:layout_width="50dip" android:id="@+id/museumimage" android:layout_height="50dip"></ImageView>
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10dip">
+        <ImageView android:layout_margin="5dip" android:layout_gravity="center|center_horizontal" android:src="@drawable/museum" android:id="@+id/museumimage" android:scaleType="fitXY" android:layout_height="70dip" android:layout_width="70dip"></ImageView>
         <TextView android:layout_margin="5dip" android:id="@+id/museumname" android:gravity="center_horizontal" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="match_parent" android:text="TextView" android:layout_height="wrap_content"></TextView>
     </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10dip">
         <TextView android:id="@+id/museumdistancelabel" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/distance" android:layout_marginLeft="5dip" android:layout_marginTop="5dip" android:textColor="@color/grey"></TextView>
         <TextView android:id="@+id/museumdistance" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:layout_marginLeft="5dip" android:layout_marginRight="5dip" android:layout_marginTop="5dip"></TextView>
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout03" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/LinearLayout03" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10dip">
         <TextView android:id="@+id/TextView06" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/phone" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
         <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:id="@+id/museumphone" android:layout_marginLeft="5dip" android:layout_marginRight="5dip"></TextView>
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout02" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/LinearLayout02" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10dip">
         <TextView android:id="@+id/TextView04" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/website" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
-        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:id="@+id/museumwebsite" android:layout_marginLeft="5dip" android:layout_marginRight="5dip" ></TextView>
+        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_height="wrap_content" android:id="@+id/museumwebsite" android:layout_marginLeft="5dip" android:layout_marginRight="5dip" android:ellipsize="end" android:autoLink="web"></TextView>
     </LinearLayout>
-    <TextView android:id="@+id/TextView02" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="@string/description" android:layout_height="wrap_content" android:layout_marginLeft="5dip" android:textColor="@color/grey"></TextView>
-    <TextView android:id="@+id/museumdescription" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:text="TextView" android:layout_marginRight="5dip" android:layout_marginLeft="5dip" android:layout_height="wrap_content" android:scrollbars="vertical"></TextView>
-    
+    <RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="match_parent" android:layout_height="fill_parent">
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout3" android:gravity="bottom" android:layout_alignParentBottom="true" android:layout_width="match_parent">
+            <Button android:layout_height="wrap_content" android:layout_width="0dip" android:layout_weight="1.0" android:text="@string/wsbsitebutton" android:id="@+id/website"></Button>
+            <Button android:layout_height="wrap_content" android:layout_width="0dip" android:layout_weight="1.0" android:text="@string/phonecall" android:id="@+id/call"></Button>
+        </LinearLayout>
+        <TextView android:id="@+id/TextView02" android:text="@string/description" android:textColor="@color/grey" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_marginLeft="15dip" android:layout_alignParentTop="true"></TextView>
+        <TextView android:id="@+id/museumdescription" android:layout_marginRight="5dip" android:text="TextView" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:scrollbars="vertical" android:layout_width="wrap_content" android:layout_marginLeft="15dip" android:layout_below="@+id/TextView02" android:layout_above="@+id/linearLayout3"></TextView>
+    </RelativeLayout>
 </LinearLayout>

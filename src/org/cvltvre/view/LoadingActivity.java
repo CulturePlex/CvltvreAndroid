@@ -18,6 +18,8 @@ import org.cvltvre.vo.MuseumVO;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +37,9 @@ public class LoadingActivity extends Activity {
 	 */
 	public static LoadingActivity loadingActivity;
 	public static CustomAdapter customAdapter;
+	private static CustomLocationListener customLocationListener=null;
+	public static SensorHandler sensorHandler=null;
+	private static boolean paused=false;
 	public static Set<MuseumVO> museumVOs=Collections.synchronizedSortedSet(new TreeSet<MuseumVO>(new Comparator<MuseumVO>() {
 
 		public int compare(MuseumVO object1, MuseumVO object2) {
@@ -52,11 +57,12 @@ public class LoadingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.loading);
-		new SensorHandler(handler,this.getApplicationContext());
 		loadingActivity=this;
+		setContentView(R.layout.loading);
+		sensorHandler=new SensorHandler(handler,this.getApplicationContext());
 		customAdapter=new CustomAdapter(this);
-		Thread threadForLocation=new Thread(new CustomLocationListener(this.getApplicationContext()));
+		customLocationListener=new CustomLocationListener(this.getApplicationContext());
+		Thread threadForLocation=new Thread(customLocationListener);
 		threadForLocation.start();
 		Thread threadForMuseums=new Thread(new MultiThreadRequest(handler,this));
 		threadForMuseums.start();
@@ -75,4 +81,31 @@ public class LoadingActivity extends Activity {
         }
     };
     
+    
+    protected void onPause() {
+    	super.onPause();
+    	paused=true;
+    };
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	if(paused){
+    		//CustomLocationListener.locationManager.requestLocationUpdates(CustomLocationListener.best, 2000, 0, customLocationListener);
+        	//SensorHandler.mSensorManager.registerListener(sensorHandler,SensorHandler.mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
+        	if(museumVOs!=null && museumVOs.size()!=0){
+        		Intent intent = new Intent(loadingActivity, MainTabActivity.class);
+        		startActivity(intent);
+        	}
+        }
+    }
+    
+    
+    @Override
+    protected void onRestart() {
+    	// TODO Auto-generated method stub
+    	super.onRestart();
+    	Intent intent = new Intent(loadingActivity, MainTabActivity.class);
+		startActivity(intent);
+    }
 }

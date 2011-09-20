@@ -4,11 +4,7 @@
  */
 package org.cvltvre.view;
 
-import java.util.List;
-
 import org.cvltvre.R;
-import org.cvltvre.adapter.CustomAdapter;
-import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.vo.MuseumVO;
 
 import android.app.Activity;

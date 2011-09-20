@@ -14,6 +14,7 @@ import org.cvltvre.vo.MuseumVO;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -24,8 +25,8 @@ import com.google.android.maps.OverlayItem;
 
 public class MainMapActivity extends MapActivity {
 	
-	MapView mapView;
-	private static Drawable museumDrawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.museummap);
+	public static MapView mapView;
+	public static Drawable museumDrawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.museummap);
 	private static Drawable personDrawable=LoadingActivity.loadingActivity.getResources().getDrawable(R.drawable.person);
 	public static List<Overlay> mapOverlays;
 	
@@ -60,7 +61,7 @@ public class MainMapActivity extends MapActivity {
 							String[] coords=museumVO.getMap_options().split(",");
 							latitude = (int) (new BigDecimal(coords[1]).doubleValue() * 1000000);
 							longitude = (int) (new BigDecimal(coords[0]).doubleValue() * 1000000);
-							overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), museumVO.getTitle(), museumVO.getTitle());
+							overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), museumVO.getId(), museumVO.getId());
 							MainMapActivity.museumOverlay.addOverlay(overlayItem);
 						}
 					}
@@ -82,5 +83,6 @@ public class MainMapActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
+	
 
 }

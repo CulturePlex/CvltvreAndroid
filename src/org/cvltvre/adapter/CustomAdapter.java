@@ -4,23 +4,17 @@
 package org.cvltvre.adapter;
 
 import java.net.MalformedURLException;
-import java.text.DecimalFormat;
-import java.util.List;
 
 import org.cvltvre.R;
-import org.cvltvre.utils.Geometry;
 import org.cvltvre.utils.ImageThreadLoader;
-import org.cvltvre.utils.SensorHandler;
 import org.cvltvre.utils.ImageThreadLoader.ImageLoadedListener;
+import org.cvltvre.utils.SensorHandler;
 import org.cvltvre.view.LoadingActivity;
-import org.cvltvre.view.MainListActivity;
 import org.cvltvre.vo.MuseumVO;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +38,7 @@ public class CustomAdapter extends BaseAdapter {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
         // Icons bound to the rows.
-        mIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow);
+        //mIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow0001);
     }
 
     /**
@@ -105,6 +99,8 @@ public class CustomAdapter extends BaseAdapter {
             holder.thumb=(ImageView) convertView.findViewById(R.id.thumb);
             holder.compass=(ImageView)convertView.findViewById(R.id.compass);
             convertView.setTag(holder);
+            //holder.compass=new Compass(LoadingActivity.loadingActivity.getApplicationContext());
+            //holder.compass.invalidate();
         } else {
             // Get the ViewHolder back to get fast access to the TextView
             // and the ImageView.
@@ -120,18 +116,45 @@ public class CustomAdapter extends BaseAdapter {
         String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
         holder.distance.setText(distance+" Km");
         
-        int compassHeading =0;
+       /* float compassHeading =0;
         if(SensorHandler.updated){
-        	compassHeading= Float.valueOf(SensorHandler.mValues[0]).intValue();
+        	String[] coords=museumVO.getMap_options().split(",");
+			double latitude = Double.parseDouble(coords[1]);
+			double longitude = Double.parseDouble(coords[0]);
+        	//compassHeading= (int) Geometry.getLocationDirection((int) (-SensorHandler.mValues[0]-90), CustomLocationListener.location.getLatitude(), CustomLocationListener.location.getLongitude(), latitude, longitude);
+			compassHeading= (int) (-SensorHandler.mValues[0]-90);
         }
-        Bitmap arrow = mIcon;
-        Matrix matrix=new Matrix();
-        matrix.preRotate(compassHeading);
-        //matrix.setScale(1, 1);
-        Bitmap rotateArrow = Bitmap.createBitmap(arrow, 0, 0,arrow.getWidth(), arrow.getHeight(), matrix, true);
-        BitmapDrawable bmdArrow = new BitmapDrawable(rotateArrow);
-        //holder.compass.setScaleType(ScaleType.MATRIX);
-        holder.compass.setImageDrawable(bmdArrow);
+        */
+       /* Matrix matrix = new Matrix();
+        matrix.postRotate(compassHeading);
+       
+        Bitmap resizedBitmap = Bitmap.createBitmap(mIcon, 0, 0, mIcon.getWidth(), mIcon.getHeight(), matrix, true);
+        holder.compass.setImageBitmap(resizedBitmap);
+        
+        */
+        //Canvas canvas=new Canvas();
+        //canvas.setBitmap(Bitmap.createBitmap(mIcon));
+        //canvas.save();
+        
+        
+        
+        
+        
+        String[] coords=museumVO.getMap_options().split(",");
+		double latitude = Double.parseDouble(coords[1]);
+		double longitude = Double.parseDouble(coords[0]);
+		
+		
+        holder.compass.setImageBitmap(SensorHandler.getCompassImage(latitude,longitude));
+        holder.compass.setScaleType(ScaleType.FIT_XY);
+        
+        
+        
+        
+        
+        
+        //holder.compass.setBackgroundColor(Color.TRANSPARENT);
+        
         
         Bitmap cachedImage = null;
         if(museumVO.getImage()==null){
@@ -161,7 +184,7 @@ public class CustomAdapter extends BaseAdapter {
         }else{
         	holder.thumb.setImageBitmap(BitmapFactory.decodeResource(parent.getResources(), org.cvltvre.R.drawable.museum));
         }
-        
+        holder.thumb.setScaleType(ScaleType.FIT_XY);
         //holder.thumb.setImageBitmap(LoadingActivity.museumVOs.get(position).getBitmap());
         return convertView;
     }
@@ -172,7 +195,6 @@ public class CustomAdapter extends BaseAdapter {
         ImageView arrow;
         ImageView thumb;
         ImageView compass;
-        
     }
 
 }

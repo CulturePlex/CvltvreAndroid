@@ -21,8 +21,8 @@ import android.os.Looper;
  */
 public class CustomLocationListener implements LocationListener, Runnable{
 
-	private static LocationManager locationManager;
-	private static String best;
+	public static LocationManager locationManager;
+	public static String best;
 	public static Location location;
 	private static Context context;
 	

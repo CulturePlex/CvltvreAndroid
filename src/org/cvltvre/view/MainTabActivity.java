@@ -23,17 +23,24 @@ public class MainTabActivity extends TabActivity {
 
 		Intent intent = new Intent(this, MainListActivity.class);
 		tabHost.addTab(tabHost.newTabSpec("Museums")
-				.setIndicator("Museums", res.getDrawable(R.drawable.ic_tab_main_list))
+				.setIndicator("Museums", res.getDrawable(R.layout.ic_tab_main_list))
 				.setContent(intent));
 
 		Intent intent2 = new Intent(this, MainMapActivity.class);
 		tabHost.addTab(tabHost
 				.newTabSpec("Map")
-				.setIndicator("Map", res.getDrawable(R.drawable.ic_tab_main_map))
+				.setIndicator("Map", res.getDrawable(R.layout.ic_tab_main_map))
 				.setContent(intent2));
 		tabHost.setCurrentTab(0);
 
 		
 
 	}
+	
+    protected void onStop() {
+    	super.onStop();
+    	//CustomLocationListener.locationManager.removeUpdates(customLocationListener);
+    	//SensorHandler.mSensorManager.unregisterListener(sensorHandler);
+    	//paused=true;
+    };
 }

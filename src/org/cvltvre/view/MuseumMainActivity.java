@@ -4,21 +4,28 @@ import org.cvltvre.R;
 import org.cvltvre.vo.MuseumVO;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MuseumMainActivity extends Activity{
+	
+	private static MuseumVO museumVO;
 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.museuminfo);
-		MuseumVO museumVO=null;
+		museumVO=null;
 		for(MuseumVO museumVOTemporal:LoadingActivity.museumVOs){
 			if(museumVOTemporal.getId().equals(this.getIntent().getExtras().get("id"))){
 				museumVO=museumVOTemporal;
@@ -31,8 +38,9 @@ public class MuseumMainActivity extends Activity{
 			imageView.setImageBitmap(museumVO.getBitmap());
 		}
 		
-		TextView distance=(TextView) findViewById(R.id.museumdistance);
-		distance.setText(museumVO.getDistance());
+		TextView distanceView=(TextView) findViewById(R.id.museumdistance);
+		String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
+		distanceView.setText(distance+" Km");
 		TextView phone=(TextView) findViewById(R.id.museumphone);
 		phone.setText(museumVO.getPhone());
 		TextView website=(TextView) findViewById(R.id.museumwebsite);
@@ -40,6 +48,27 @@ public class MuseumMainActivity extends Activity{
 		TextView description=(TextView) findViewById(R.id.museumdescription);
 		description.setText(Html.fromHtml(museumVO.getDescription()));
 		description.setMovementMethod(new ScrollingMovementMethod());
+		
+		Button buttonCall =(Button) findViewById(R.id.call);
+		Button websiteButton =(Button) findViewById(R.id.website);
+		
+		buttonCall.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent intent=new Intent(android.content.Intent.ACTION_DIAL);
+				intent.setData(Uri.parse("tel:"+museumVO.getPhone()));
+                startActivity(intent);
+			}
+		});
+		
+		websiteButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse(museumVO.getWebsite()));
+				startActivity(intent);
+			}
+		});
+		
 		
 	}
 
