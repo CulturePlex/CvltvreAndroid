@@ -1,0 +1,11 @@
+h1. Cvltvre-Android
+
+Museum geolocalization for Android
+
+h2. Requirements
+
+* Eclipse
+* Android SDK
+* Android Google APIS
+* AVD API Level 8
+
