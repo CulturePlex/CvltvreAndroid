@@ -162,9 +162,15 @@ public class CustomAdapter extends BaseAdapter {
         }else{
         	if(museumVO.getBitmap()==null){
         		try {
-                    cachedImage = imageLoader.loadImage("http://www.cvltvre.com/"+museumVO.getImage(), new ImageLoadedListener() {
-                    public void imageLoaded(Bitmap imageBitmap) {
-                      //museumVO.setBitmap(imageBitmap);
+                    cachedImage = imageLoader.loadImage(museumVO.getId(),"http://www.cvltvre.com/"+museumVO.getImage(), new ImageLoadedListener() {
+                    public void imageLoaded(String id,Bitmap imageBitmap) {
+                    	for(MuseumVO museumVO:LoadingActivity.museumVOs){
+							if(museumVO.getId().equals(id)){
+								museumVO.setBitmap(imageBitmap);
+								break;
+							}
+                    	}
+                      //LoadingActivity.museumVOs..setBitmap(imageBitmap);
                   	  //holder.thumb.setImageBitmap(imageBitmap);
                   	  notifyDataSetChanged();                }
                     });

@@ -64,12 +64,29 @@ public class MuseumMainActivity extends Activity{
 			
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setData(Uri.parse(museumVO.getWebsite()));
+				if(museumVO.getWebsite().startsWith("http")){
+					intent.setData(Uri.parse(museumVO.getWebsite()));
+				}else{
+					intent.setData(Uri.parse("http://"+museumVO.getWebsite()));	
+				}
 				startActivity(intent);
 			}
 		});
 		
 		
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		LoadingActivity.startListeners();
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		LoadingActivity.killListeners();
 	}
 
 }

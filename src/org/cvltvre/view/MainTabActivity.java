@@ -37,10 +37,16 @@ public class MainTabActivity extends TabActivity {
 
 	}
 	
-    protected void onStop() {
-    	super.onStop();
-    	//CustomLocationListener.locationManager.removeUpdates(customLocationListener);
-    	//SensorHandler.mSensorManager.unregisterListener(sensorHandler);
-    	//paused=true;
-    };
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		LoadingActivity.startListeners();
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		LoadingActivity.killListeners();
+	}
 }

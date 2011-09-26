@@ -85,15 +85,15 @@ public class LoadingActivity extends Activity {
     protected void onPause() {
     	super.onPause();
     	paused=true;
+    	killListeners();
     };
     
     @Override
     protected void onResume() {
     	super.onResume();
     	if(paused){
-    		//CustomLocationListener.locationManager.requestLocationUpdates(CustomLocationListener.best, 2000, 0, customLocationListener);
-        	//SensorHandler.mSensorManager.registerListener(sensorHandler,SensorHandler.mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
-        	if(museumVOs!=null && museumVOs.size()!=0){
+    		startListeners();
+    		if(museumVOs!=null && museumVOs.size()!=0){
         		Intent intent = new Intent(loadingActivity, MainTabActivity.class);
         		startActivity(intent);
         	}
@@ -108,4 +108,19 @@ public class LoadingActivity extends Activity {
     	Intent intent = new Intent(loadingActivity, MainTabActivity.class);
 		startActivity(intent);
     }
+    
+    public static void startListeners(){
+    	CustomLocationListener.locationManager.requestLocationUpdates(CustomLocationListener.best, 2000, 0, customLocationListener);
+    	SensorHandler.mSensorManager.registerListener(sensorHandler,SensorHandler.mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),SensorManager.SENSOR_DELAY_GAME);
+    }
+    public static void killListeners(){
+    	if(CustomLocationListener.locationManager!=null&&customLocationListener!=null){
+    		CustomLocationListener.locationManager.removeUpdates(customLocationListener);
+    	}
+    	if(SensorHandler.mSensorManager!=null&&sensorHandler!=null){
+    		SensorHandler.mSensorManager.unregisterListener(sensorHandler);	
+    	}
+    	
+    }
+    
 }

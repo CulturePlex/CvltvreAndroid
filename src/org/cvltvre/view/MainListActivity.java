@@ -57,6 +57,18 @@ public class MainListActivity extends Activity{
 		addContentView(listMuseumView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 	}
-
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		LoadingActivity.startListeners();
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		LoadingActivity.killListeners();
+	}
 
 }

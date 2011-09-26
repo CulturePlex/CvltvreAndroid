@@ -31,6 +31,7 @@ public class ImageThreadLoader {
 	private final class QueueItem {
 		public URL url;
 		public ImageLoadedListener listener;
+		public String id;
 	}
 	private final ArrayList<QueueItem> Queue = new ArrayList<QueueItem>();
 
@@ -49,7 +50,7 @@ public class ImageThreadLoader {
 	 * being loaded.
 	 */
 	public interface ImageLoadedListener {
-		public void imageLoaded(Bitmap imageBitmap );
+		public void imageLoaded(String id,Bitmap imageBitmap );
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class ImageThreadLoader {
 									//     Ideally we would re-run the network load or something.
 									SoftReference<Bitmap> ref = Cache.get(item.url.toString());
 									if( ref != null ) {
-										item.listener.imageLoaded(ref.get());
+										item.listener.imageLoaded(item.id,ref.get());
 									}
 								}
 							}
@@ -88,7 +89,7 @@ public class ImageThreadLoader {
 							handler.post(new Runnable() {
 								public void run() {
 									if( item.listener != null ) {
-										item.listener.imageLoaded(bmp);
+										item.listener.imageLoaded(item.id,bmp);
 									}
 								}
 							});
@@ -109,7 +110,7 @@ public class ImageThreadLoader {
 	 * @throws MalformedURLException If the provided uri cannot be parsed
 	 * @return A Bitmap image if the image is in the cache, else null.
 	 */
-	public Bitmap loadImage( final String uri, final ImageLoadedListener listener) throws MalformedURLException {
+	public Bitmap loadImage(String id, final String uri, final ImageLoadedListener listener) throws MalformedURLException {
 		// If it's in the cache, just get it and quit it
 		if( Cache.containsKey(uri)) {
 			SoftReference<Bitmap> ref = Cache.get(uri);
@@ -121,6 +122,7 @@ public class ImageThreadLoader {
 		QueueItem item = new QueueItem();
 		item.url = new URL(uri);
 		item.listener = listener;
+		item.id=id;
 		Queue.add(item);
 
 		// start the thread if needed

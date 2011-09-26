@@ -32,7 +32,8 @@ public class MultiThreadRequest implements Runnable {
 			while(!LoadingActivity.locationRetrieve){
 				Thread.sleep(100);
 			}
-			doMatrix(dotOne, new BigDecimal(CustomLocationListener.location.getLatitude()), new BigDecimal(CustomLocationListener.location.getLongitude()), new BigDecimal(CustomLocationListener.location.getLatitude()), new BigDecimal(CustomLocationListener.location.getLongitude()));
+			//doMatrix(dotOne, new BigDecimal(CustomLocationListener.location.getLatitude()), new BigDecimal(CustomLocationListener.location.getLongitude()), new BigDecimal(CustomLocationListener.location.getLatitude()), new BigDecimal(CustomLocationListener.location.getLongitude()));
+			doMatrix(1, (int)CustomLocationListener.location.getLatitude(), (int)CustomLocationListener.location.getLongitude(), (int)CustomLocationListener.location.getLatitude(), (int)CustomLocationListener.location.getLongitude());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,9 +54,13 @@ public class MultiThreadRequest implements Runnable {
 	}
 	
 	
-	public void doMatrix(BigDecimal size,BigDecimal top,BigDecimal right,BigDecimal bottom,BigDecimal left) throws JSONException{
+	public void doMatrix(int size,int top,int right,int bottom,int left) throws JSONException{
+		if(isBusy){
+			waitNextRadius();
+		}else{
 		if(LoadingActivity.museumVOs.size()<20){
-			if(size==dotOne){
+			
+			/*if(size==dotOne){
 				BigDecimal diferenceSize=new BigDecimal(0.15);
 				makeThreadRequest(top.add(diferenceSize),right.add(diferenceSize),bottom.subtract(diferenceSize),left.subtract(diferenceSize));
 				doMatrix(size.add(diferenceSize), top.add(diferenceSize), right.add(diferenceSize),bottom.subtract(diferenceSize),left.subtract(diferenceSize));
@@ -79,15 +84,61 @@ public class MultiThreadRequest implements Runnable {
 				}
 				doMatrix(size.add(dotOne), top, right,bottom,left);
 			}
+			*/
+			
+			
+			if(size==1){
+				makeThreadRequest(top+1,right+1,bottom,left);
+				//doMatrix(size+1, top+1, right+1,bottom,left);
+				top=top+1;
+				right=right+1;
+				int diferenceSize=1;
+				makeThreadRequest(top+diferenceSize,right+diferenceSize,bottom+diferenceSize,left+diferenceSize);
+				makeThreadRequest(top-diferenceSize,right-diferenceSize,bottom-diferenceSize,left-diferenceSize);
+				makeThreadRequest(top+diferenceSize,right-diferenceSize,bottom+diferenceSize,left-diferenceSize);
+				makeThreadRequest(top-diferenceSize,right+diferenceSize,bottom-diferenceSize,left+diferenceSize);
+				for(int x=(right-diferenceSize);x<(left+diferenceSize);x++){
+					//top right ->
+					makeThreadRequest(top+diferenceSize,x+1,bottom+diferenceSize,x);
+					//bottom right ->
+					makeThreadRequest(top-diferenceSize,x+1,bottom-diferenceSize,x);
+				}
+				for(int x=(top-diferenceSize);x<(bottom+diferenceSize);x++){
+					//left top ^
+					makeThreadRequest(x+1,right-diferenceSize,x,left-diferenceSize);
+					//right top ^
+					makeThreadRequest(x+1,right+diferenceSize,x,left+diferenceSize);
+				}
+				//doMatrix(size+2, top, right,bottom,left);
+			}else{
+				/*int diferenceSize=size-1;
+				makeThreadRequest(top+diferenceSize,right+diferenceSize,bottom+diferenceSize,left+diferenceSize);
+				makeThreadRequest(top-diferenceSize,right-diferenceSize,bottom-diferenceSize,left-diferenceSize);
+				makeThreadRequest(top+diferenceSize,right-diferenceSize,bottom+diferenceSize,left-diferenceSize);
+				makeThreadRequest(top-diferenceSize,right+diferenceSize,bottom-diferenceSize,left+diferenceSize);
+				for(int x=(right-diferenceSize);x<(left+diferenceSize);x++){
+					//top right ->
+					makeThreadRequest(top+diferenceSize,x+1,bottom+diferenceSize,x);
+					//bottom right ->
+					makeThreadRequest(top-diferenceSize,x+1,bottom-diferenceSize,x);
+				}
+				for(int x=(top-diferenceSize);x<(bottom+diferenceSize);x++){
+					//left top ^
+					makeThreadRequest(x+1,right-diferenceSize,x,left-diferenceSize);
+					//right top ^
+					makeThreadRequest(x+1,right+diferenceSize,x,left+diferenceSize);
+				}
+				doMatrix(size+1, top, right,bottom,left);
+				*/
+			}
 		}else{
 			return;
 		}
 	}
+	}
 	
-	private void makeThreadRequest(final BigDecimal top,final BigDecimal right,final BigDecimal bottom,final BigDecimal left){
-		if(isBusy){
-			waitNextRadius();
-		}else{
+	private void makeThreadRequest(final int top,final int right,final int bottom,final int left){
+		
 			isBusy=true;
 			Thread thread=new Thread(){
 				@Override
@@ -100,7 +151,7 @@ public class MultiThreadRequest implements Runnable {
 						}
 						List<MuseumVO> museumVOs = JSONutils.getMuseumsFromResponseString(response,LoadingActivity.loadingActivity);
 						if(museumVOs.size()>0){
-							for(MuseumVO museumVO:museumVOs){
+							/*for(MuseumVO museumVO:museumVOs){
 								boolean exist=false;
 								for(MuseumVO museumVO2:LoadingActivity.museumVOs){
 									if(museumVO.getId().equals(museumVO2.getId())){
@@ -108,12 +159,12 @@ public class MultiThreadRequest implements Runnable {
 										break;
 									}
 								}
-								if(!exist){
-									LoadingActivity.museumVOs.add(museumVO);
+								if(!exist){*/
+									LoadingActivity.museumVOs.addAll(museumVOs);
 									handler.sendEmptyMessage(1);
 								}
-							}
-						}
+							//}
+						//}
 						isBusy=false;
 					} catch (JSONException e) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(LoadingActivity.loadingActivity);
@@ -127,9 +178,4 @@ public class MultiThreadRequest implements Runnable {
 			};
 			thread.start();
 		}
-		
-	}
-	
-	
-	
 }

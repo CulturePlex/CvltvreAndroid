@@ -71,10 +71,13 @@ public class CustomLocationListener implements LocationListener, Runnable{
 		if(best==null && providers != null && providers.size()>0){
 			best=providers.get(0);
 		}
+		Location location = locationManager.getLastKnownLocation(best);
 		if(providers.contains(LocationManager.GPS_PROVIDER)){
 			best=LocationManager.GPS_PROVIDER;
 		}
-		Location location = locationManager.getLastKnownLocation(best);
+		if(location==null){
+			location = locationManager.getLastKnownLocation(best);
+		}
 		locationManager.requestLocationUpdates(best, 2000, 0, this);
 		CustomLocationListener.location=location;
 		while(CustomLocationListener.location==null){
