@@ -44,7 +44,7 @@ public class MuseumVO{
 			this.setTitle(museum.getString("title"));
 			this.setFax(museum.getString("fax"));
 			this.setWebsite(museum.getString("website"));
-			this.setAddress(museum.getString("address"));
+			this.setAddress(museum.getString("address").replace("<br>", ", ").replace("<br/>", ", ").replace("<BR>", ", ").replace(", , ", ", ").replace(", , ", ", "));
 			this.setDescription(museum.getString("description"));
 			this.setSubtype(museum.getString("subtype"));
 			this.setContact(museum.getString("contact"));

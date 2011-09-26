@@ -45,6 +45,8 @@ public class MuseumMainActivity extends Activity{
 		phone.setText(museumVO.getPhone());
 		TextView website=(TextView) findViewById(R.id.museumwebsite);
 		website.setText(museumVO.getWebsite());
+		TextView address=(TextView) findViewById(R.id.museumaddress);
+		address.setText(Html.fromHtml(museumVO.getAddress()));
 		TextView description=(TextView) findViewById(R.id.museumdescription);
 		description.setText(Html.fromHtml(museumVO.getDescription()));
 		description.setMovementMethod(new ScrollingMovementMethod());
