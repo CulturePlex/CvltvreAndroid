@@ -17,6 +17,7 @@ public class MultiThreadRequest implements Runnable {
 
 	private Handler handler;
 	private static boolean isBusy = false;
+	public static boolean charged = false;
 	//private static Double startDistance=0.1;
 	private static BigDecimal dotOne=new BigDecimal(0.3);
 
@@ -109,6 +110,8 @@ public class MultiThreadRequest implements Runnable {
 					//right top ^
 					makeThreadRequest(x+1,right+diferenceSize,x,left+diferenceSize);
 				}
+				
+				charged=true;
 				//doMatrix(size+2, top, right,bottom,left);
 			}else{
 				/*int diferenceSize=size-1;

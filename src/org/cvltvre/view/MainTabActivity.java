@@ -1,6 +1,5 @@
-/*
- * Author : ErVaLt / techwavedev.com
- * Description : TabLayout Andorid App
+/**
+ * 
  */
 package org.cvltvre.view;
 

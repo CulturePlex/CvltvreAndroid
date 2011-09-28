@@ -167,6 +167,7 @@ public class CustomAdapter extends BaseAdapter {
                     	for(MuseumVO museumVO:LoadingActivity.museumVOs){
 							if(museumVO.getId().equals(id)){
 								museumVO.setBitmap(imageBitmap);
+								//imageBitmap.recycle();
 								break;
 							}
                     	}

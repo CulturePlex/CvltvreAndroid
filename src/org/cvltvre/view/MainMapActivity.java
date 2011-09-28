@@ -1,6 +1,5 @@
-/*
- * Author : ErVaLt / techwavedev.com
- * Description : TabLayout Andorid App
+/**
+ * 
  */
 package org.cvltvre.view;
 
@@ -10,6 +9,7 @@ import java.util.List;
 import org.cvltvre.R;
 import org.cvltvre.utils.CustomLocationListener;
 import org.cvltvre.utils.CustomMuseumOverlay;
+import org.cvltvre.utils.MultiThreadRequest;
 import org.cvltvre.vo.MuseumVO;
 
 import android.graphics.drawable.Drawable;
@@ -56,7 +56,12 @@ public class MainMapActivity extends MapActivity {
 				MainMapActivity.mapOverlays.add(MainMapActivity.personOverlay);
 				MainMapActivity.mapOverlays.add(MainMapActivity.museumOverlay);
 				while(true){
-					if(LoadingActivity.museumVOs.size()>0){
+					if(MultiThreadRequest.charged){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						for(MuseumVO museumVO:LoadingActivity.museumVOs){
 							String[] coords=museumVO.getMap_options().split(",");
 							latitude = (int) (new BigDecimal(coords[1]).doubleValue() * 1000000);
