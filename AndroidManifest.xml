@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="org.cvltvre" android:versionCode="2"
+	package="com.cvltvre" android:versionCode="2"
 	android:versionName="1.1" >
 	<supports-screens android:resizeable="true"/>
 	<uses-sdk android:minSdkVersion="8" 
@@ -26,7 +26,7 @@
 		</activity>
 		<activity android:name=".view.MainTabActivity" android:theme="@android:style/Theme.Light" android:screenOrientation="portrait">
 		</activity>
-		<activity android:name=".view.MuseumMainActivity" android:theme="@android:style/Theme.Light" android:screenOrientation="portrait">
+		<activity android:name=".view.MuseumMainActivityainActivity" android:theme="@android:style/Theme.Light" android:screenOrientation="portrait">
 		</activity>
 		
 	</application>
