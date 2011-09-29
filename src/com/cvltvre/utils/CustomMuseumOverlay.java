@@ -70,7 +70,7 @@ public class CustomMuseumOverlay extends ItemizedOverlay<OverlayItem> {
 			// As we want the base of our balloon icon to be at the exact location of
 			// our map location, we set our Rectangle’s location so the bottom-middle of
 			// our icon is at the screen coordinates of our map location (shown above).
-			Drawable bubbleIcon=MainMapActivity.museumDrawable;
+			Drawable bubbleIcon=MapMuseumUpdater.museumDrawable;
 			
 			hitTestRecr.set(-bubbleIcon.getIntrinsicWidth()/2,-bubbleIcon.getIntrinsicHeight(),bubbleIcon.getIntrinsicWidth()/2,0);
 	

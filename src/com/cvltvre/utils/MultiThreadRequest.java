@@ -163,8 +163,14 @@ public class MultiThreadRequest implements Runnable {
 									}
 								}
 								if(!exist){*/
-									LoadingActivity.museumVOs.addAll(museumVOs);
-									handler.sendEmptyMessage(1);
+							
+							LoadingActivity.museumVOs.addAll(museumVOs);
+							handler.sendEmptyMessage(1);
+							Thread thread= new Thread(new MapMuseumUpdater(museumVOs));
+							thread.start();
+							
+							
+									
 								}
 							//}
 						//}
