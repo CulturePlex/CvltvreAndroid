@@ -114,6 +114,10 @@ public class CustomMuseumOverlay extends ItemizedOverlay<OverlayItem> {
 	  
 	 return true;
 	}
+
 	
+	public void populateNow(){
+		populate();
+	}
 	
 }

@@ -49,7 +49,7 @@ public class MapMuseumUpdater implements Runnable{
 			customMuseumOverlay.addOverlay(overlayItem);
 		}
 		MainMapActivity.mapOverlays.add(customMuseumOverlay);
-		
+		//customMuseumOverlay.populateNow();
 	}
 
 	public void setMuseumVOs(List<MuseumVO> museumVOs) {
