@@ -1,6 +1,8 @@
 package com.cvltvre.utils;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.json.JSONException;
 
@@ -15,6 +17,7 @@ import com.cvltvre.vo.MuseumVO;
 
 public class MultiThreadRequest implements Runnable {
 
+	private Executor executor=Executors.newSingleThreadExecutor();
 	private Handler handler;
 	private static boolean isBusy = false;
 	public static boolean charged = false;
@@ -56,6 +59,7 @@ public class MultiThreadRequest implements Runnable {
 	
 	
 	public void doMatrix(int size,int top,int right,int bottom,int left) throws JSONException{
+		
 		if(isBusy){
 			waitNextRadius();
 		}else{
@@ -152,8 +156,19 @@ public class MultiThreadRequest implements Runnable {
 						if(response==null){
 							throw new JSONException("Connection problem");
 						}
-						List<MuseumVO> museumVOs = JSONutils.getMuseumsFromResponseString(response,LoadingActivity.loadingActivity);
+						final List<MuseumVO> museumVOs = JSONutils.getMuseumsFromResponseString(response,LoadingActivity.loadingActivity);
 						if(museumVOs.size()>0){
+							Thread thread=new Thread(){
+								public void run() {
+									super.run();
+									for(MuseumVO museumVO:museumVOs){
+										LoadingActivity.museumVOs.add(museumVO);
+										handler.sendEmptyMessage(1);
+									}
+								};	
+							};
+							handler.post(thread);
+							handler.sendEmptyMessage(1);
 							/*for(MuseumVO museumVO:museumVOs){
 								boolean exist=false;
 								for(MuseumVO museumVO2:LoadingActivity.museumVOs){
@@ -164,14 +179,11 @@ public class MultiThreadRequest implements Runnable {
 								}
 								if(!exist){*/
 							
-							LoadingActivity.museumVOs.addAll(museumVOs);
-							handler.sendEmptyMessage(1);
-							Thread thread= new Thread(new MapMuseumUpdater(museumVOs));
-							thread.start();
-							
-							
-									
-								}
+							//LoadingActivity.museumVOs.addAll(museumVOs);
+							//handler.sendEmptyMessage(1);
+							Thread thread2= new Thread(new MapMuseumUpdater(museumVOs));
+							thread2.start();
+							}
 							//}
 						//}
 						isBusy=false;
@@ -185,6 +197,6 @@ public class MultiThreadRequest implements Runnable {
 					}
 				}
 			};
-			thread.start();
+			executor.execute(thread);
 		}
 }

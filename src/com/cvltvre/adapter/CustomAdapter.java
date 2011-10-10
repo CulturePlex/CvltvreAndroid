@@ -4,14 +4,24 @@
 package com.cvltvre.adapter;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -28,27 +38,56 @@ import com.cvltvre.vo.MuseumVO;
  * @author Pencerval
  *
  */
-public class CustomAdapter extends BaseAdapter {
-    private LayoutInflater mInflater;
+public class CustomAdapter extends ArrayAdapter<MuseumVO> {
+    public static boolean filtered;
+	public static boolean filteredString;
+	public static List<MuseumVO> filteredMuseums=new LinkedList<MuseumVO>();
+
+	private LayoutInflater mInflater;
+   // private static int size=0;
     //private Bitmap mIcon;
     
-    private ImageThreadLoader imageLoader = new ImageThreadLoader();
+    private ImageThreadLoader imageLoader;
+    //private static SortedSet museumVOs;
     
-    public CustomAdapter(Context context) {
+    
+    public CustomAdapter(Context context,int id,Handler handler) {
+    	super(context, id);
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
-        // Icons bound to the rows.
-        //mIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow0001);
+        imageLoader= new ImageThreadLoader(handler);
     }
 
-    /**
+
+
+	/**
      * The number of items in the list is determined by the number of speeches
      * in our array.
      *
      * @see android.widget.ListAdapter#getCount()
      */
     public int getCount() {
-        return LoadingActivity.museumVOs.size();
+    	/*if(LoadingActivity.museumVOsTemporal!=null && LoadingActivity.museumVOs!=null && LoadingActivity.museumVOsTemporal.size()!=LoadingActivity.museumVOs.size() || LoadingActivity.museumVOs.size()==0){
+        	for(MuseumVO museumVO:LoadingActivity.museumVOsTemporal){
+        		boolean exist=false;
+        		for(MuseumVO museumVO2:LoadingActivity.museumVOs){
+            		if(museumVO.getId().equals(museumVO2.getId())){
+            			exist=true;
+            			break;
+            		}
+            	}
+        		if(!exist){
+        			LoadingActivity.museumVOs.add(museumVO);
+        			notifyDataSetChanged();
+        		}
+        	}
+        }*/
+    	if(filtered){
+    		return filteredMuseums.size();
+    	}else{
+    		return LoadingActivity.museumVOs.size();	
+    	}
+        
     }
 
     /**
@@ -59,8 +98,13 @@ public class CustomAdapter extends BaseAdapter {
      *
      * @see android.widget.ListAdapter#getItem(int)
      */
-    public Object getItem(int position) {
-        return position;
+    public MuseumVO getItem(int position) {
+    	if(filtered){
+    		return filteredMuseums.get(position);
+    	}else{
+    		return (MuseumVO) LoadingActivity.museumVOs.toArray()[position];	
+    	}
+        
     }
 
     /**
@@ -106,7 +150,17 @@ public class CustomAdapter extends BaseAdapter {
             // and the ImageView.
             holder = (ViewHolder) convertView.getTag();
         }
-        MuseumVO museumVO=(MuseumVO) LoadingActivity.museumVOs.toArray()[position];
+        //if(LoadingActivity.museumVOs.size()!=size){
+        //	museumVOs=entriesSortedByValues(LoadingActivity.museumVOs);
+        //	size=museumVOs.size();
+        //}
+        MuseumVO museumVO;
+        if(filtered){
+        	museumVO=filteredMuseums.get(position);
+        }else{
+        	museumVO=(MuseumVO) LoadingActivity.museumVOs.toArray()[position];	
+        }
+        
         //MuseumVO museumVO=LoadingActivity.museumVOs.get(position);
         
         // Bind the data efficiently with the holder.
@@ -162,22 +216,26 @@ public class CustomAdapter extends BaseAdapter {
         }else{
         	if(museumVO.getBitmap()==null){
         		try {
-                    cachedImage = imageLoader.loadImage(museumVO.getId(),"http://www.cvltvre.com/"+museumVO.getImage(), new ImageLoadedListener() {
+        	        cachedImage = imageLoader.loadImage(museumVO.getId(),"http://www.cvltvre.com/"+museumVO.getImage(), new ImageLoadedListener() {
                     public void imageLoaded(String id,Bitmap imageBitmap) {
+                    	//LoadingActivity.museumVOs.get(id).setBitmap(imageBitmap);
+                    	//notifyDataSetChanged();
                     	for(MuseumVO museumVO:LoadingActivity.museumVOs){
 							if(museumVO.getId().equals(id)){
-								museumVO.setBitmap(imageBitmap);
+								museumVO.setBitmap(imageBitmap.copy(imageBitmap.getConfig(), false));
 								//imageBitmap.recycle();
+								notifyDataSetChanged();                
 								break;
 							}
-                    	}
+						}
+                    	
                       //LoadingActivity.museumVOs..setBitmap(imageBitmap);
                   	  //holder.thumb.setImageBitmap(imageBitmap);
-                  	  notifyDataSetChanged();                }
-                    });
-                    if(cachedImage!=null){
-                    	museumVO.setBitmap(cachedImage);
-                    }
+                  	  
+                    }});
+                    //if(cachedImage!=null){
+                    //	museumVO.setBitmap(cachedImage);
+                    //}
                   } catch (MalformedURLException e) {
                   	Log.e(CustomAdapter.class.getName(), "Bad remote image URL: " + "http://www.cvltvre.com/"+((MuseumVO)LoadingActivity.museumVOs.toArray()[position]).getImage(), e);
                   }
@@ -203,5 +261,33 @@ public class CustomAdapter extends BaseAdapter {
         ImageView thumb;
         ImageView compass;
     }
-
+    
+    /*@Override
+    public void sort(Comparator<? super MuseumVO> comparator) {
+    	// TODO Auto-generated method stub
+    	super.sort(new Comparator<MuseumVO>() {
+			public int compare(MuseumVO object1, MuseumVO object2) {
+				Float distance1 = Float.parseFloat(object1.getDistance());
+				Float distance2 = Float.parseFloat(object2.getDistance());
+				return distance1.compareTo(distance2);
+			}
+		});
+    }*/
+    
+    static <K,V extends Comparable<? super V>>
+    	SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+            new Comparator<Map.Entry<K,V>>() {
+                @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                    //return e1.getValue().compareTo(e2.getValue());
+                    Float distance1 = Float.parseFloat(((MuseumVO)e1.getValue()).getDistance());
+					Float distance2 = Float.parseFloat(((MuseumVO)e2.getValue()).getDistance());
+					return distance1.compareTo(distance2);
+                }
+            }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+    
 }

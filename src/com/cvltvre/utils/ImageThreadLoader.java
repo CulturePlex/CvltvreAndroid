@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.Thread.State;
-import java.lang.ref.SoftReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -26,7 +25,7 @@ public class ImageThreadLoader {
 
 	// Global cache of images.
 	// Using SoftReference to allow garbage collector to clean cache if needed
-	private final HashMap<String, SoftReference<Bitmap>> Cache = new HashMap<String,  SoftReference<Bitmap>>();
+	private final HashMap<String, Bitmap> Cache = new HashMap<String,  Bitmap>();
 
 	private final class QueueItem {
 		public URL url;
@@ -35,13 +34,14 @@ public class ImageThreadLoader {
 	}
 	private final ArrayList<QueueItem> Queue = new ArrayList<QueueItem>();
 
-	private final Handler handler = new Handler();	// Assumes that this is started from the main (UI) thread
+	private final Handler handler;	// Assumes that this is started from the main (UI) thread
 	private Thread thread;
 	private QueueRunner runner = new QueueRunner();;
 
 	/** Creates a new instance of the ImageThreadLoader */
-	public ImageThreadLoader() {
+	public ImageThreadLoader(Handler handler) {
 		thread = new Thread(runner);
+		this.handler=handler;
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class ImageThreadLoader {
 									// NB: There's a potential race condition here where the cache item could get
 									//     garbage collected between when we post the runnable and it's executed.
 									//     Ideally we would re-run the network load or something.
-									SoftReference<Bitmap> ref = Cache.get(item.url.toString());
+									Bitmap ref = Cache.get(item.url.toString());
 									if( ref != null ) {
-										item.listener.imageLoaded(item.id,ref.get());
+										item.listener.imageLoaded(item.id,ref);
 									}
 								}
 							}
@@ -83,7 +83,7 @@ public class ImageThreadLoader {
 					} else {
 						final Bitmap bmp = readBitmapFromNetwork(item.url);
 						if( bmp != null ) {
-							Cache.put(item.url.toString(), new SoftReference<Bitmap>(bmp));
+							Cache.put(item.url.toString(), bmp);
 
 							// Use a handler to get back onto the UI thread for the update
 							handler.post(new Runnable() {
@@ -113,16 +113,16 @@ public class ImageThreadLoader {
 	public Bitmap loadImage(String id, final String uri, final ImageLoadedListener listener) throws MalformedURLException {
 		// If it's in the cache, just get it and quit it
 		if( Cache.containsKey(uri)) {
-			SoftReference<Bitmap> ref = Cache.get(uri);
+			Bitmap ref = Cache.get(uri);
 			if( ref != null ) {
-				return ref.get();
+				return ref;
 			}
 		}
 
 		QueueItem item = new QueueItem();
 		item.url = new URL(uri);
 		item.listener = listener;
-		item.id=id;
+		item.id=new String(id);
 		Queue.add(item);
 
 		// start the thread if needed

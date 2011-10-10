@@ -15,7 +15,7 @@ import com.cvltvre.utils.CustomLocationListener;
  * @author Pencerval
  *
  */
-public class MuseumVO{
+public class MuseumVO implements Comparable{
 	
 	private String id;
 	private String phone;

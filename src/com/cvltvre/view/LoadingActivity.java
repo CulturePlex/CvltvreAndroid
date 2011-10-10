@@ -5,8 +5,14 @@ package com.cvltvre.view;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,7 +24,6 @@ import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 
 import com.cvltvre.R;
@@ -50,6 +55,9 @@ public class LoadingActivity extends Activity {
 							return distance1.compareTo(distance2);
 						}
 					}));
+	//public static Map<String, MuseumVO> museumVOs = Collections.synchronizedSortedMap(new TreeMap<String, MuseumVO>());
+	
+	//public static Set<MuseumVO> museumVOsTemporal = Collections.synchronizedSet(new HashSet<MuseumVO>());
 	public static Double maxDistance = 1.0;
 
 	private boolean firstData = false;
@@ -62,7 +70,7 @@ public class LoadingActivity extends Activity {
 		loadingActivity = this;
 		setContentView(R.layout.loading);
 		sensorHandler = new SensorHandler(handler, this.getApplicationContext());
-		customAdapter = new CustomAdapter(this);
+		customAdapter = new CustomAdapter(this,R.layout.listitemmuseum,handler);
 		customLocationListener = new CustomLocationListener(this.getApplicationContext());
 		Thread threadForLocation = new Thread(customLocationListener);
 		threadForLocation.start();
@@ -76,6 +84,7 @@ public class LoadingActivity extends Activity {
 	}
 
 	public void displayAlert(){
+		
 		new AlertDialog.Builder(this).setMessage("Please Check Your Internet Connection and Try Again").setTitle("Network Error").setCancelable(true).setNeutralButton(android.R.string.ok,	new DialogInterface.OnClickListener() { 
 			public void onClick(DialogInterface dialog, int whichButton){
 				finish();
@@ -146,5 +155,18 @@ public class LoadingActivity extends Activity {
 			return false;
 		}
 	}
+	
+	public class EntryValueComparator implements Comparator{
+		   public int compare(Object o1, Object o2) {
+		      return compare((Map.Entry)o1, (Map.Entry)o2);
+		   }
+		   public int compare(Map.Entry e1, Map.Entry e2) {
+		      int cf = ((Comparable)e1.getValue()).compareTo(e2.getValue());
+		      if (cf == 0) {
+		         cf = ((Comparable)e1.getKey()).compareTo(e2.getKey());
+		      }
+		      return cf;
+		   }
+		}
 
 }
