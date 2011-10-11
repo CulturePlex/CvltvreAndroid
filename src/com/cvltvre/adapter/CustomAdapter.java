@@ -222,7 +222,7 @@ public class CustomAdapter extends ArrayAdapter<MuseumVO> {
                     	//notifyDataSetChanged();
                     	for(MuseumVO museumVO:LoadingActivity.museumVOs){
 							if(museumVO.getId().equals(id)){
-								museumVO.setBitmap(imageBitmap.copy(imageBitmap.getConfig(), false));
+								museumVO.setBitmap(imageBitmap);
 								//imageBitmap.recycle();
 								notifyDataSetChanged();                
 								break;
