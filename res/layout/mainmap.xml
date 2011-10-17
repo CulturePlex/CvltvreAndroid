@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:id="@+id/tab2Layout">
-	<com.google.android.maps.MapView
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:apiKey="0zm9R26ve7rs_SZFZYFRAM-1xXzvgnFgHUATROg" />
-    <!--    android:apiKey="0zm9R26ve7rs_SZFZYFRAM-1xXzvgnFgHUATROg" -->
-    
-    
-    <!--android:apiKey="0NNMSqMa7E-06leCV4Y2D14OWsYdrRk3ukOuzhA"  -->
+	<LinearLayout android:orientation="vertical"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:id="@+id/linearLayout3">
+		<com.google.android.maps.MapView
+			android:id="@+id/mapview" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:clickable="true"
+			android:apiKey="0zm9R26ve7rs_SZFZYFRAM-1xXzvgnFgHUATROg" />
+		<!-- android:apiKey="0zm9R26ve7rs_SZFZYFRAM-1xXzvgnFgHUATROg" -->
+
+
+		<!--android:apiKey="0NNMSqMa7E-06leCV4Y2D14OWsYdrRk3ukOuzhA" -->
+
+	</LinearLayout>
 </RelativeLayout>

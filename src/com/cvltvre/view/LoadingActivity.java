@@ -5,14 +5,8 @@ package com.cvltvre.view;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -55,18 +49,21 @@ public class LoadingActivity extends Activity {
 							return distance1.compareTo(distance2);
 						}
 					}));
+	
+	public static Handler staticHandler;
 	//public static Map<String, MuseumVO> museumVOs = Collections.synchronizedSortedMap(new TreeMap<String, MuseumVO>());
 	
 	//public static Set<MuseumVO> museumVOsTemporal = Collections.synchronizedSet(new HashSet<MuseumVO>());
 	public static Double maxDistance = 1.0;
 
-	private boolean firstData = false;
+	private static boolean firstData = false;
 	public static boolean locationRetrieve = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		staticHandler=handler;
 		loadingActivity = this;
 		setContentView(R.layout.loading);
 		sensorHandler = new SensorHandler(handler, this.getApplicationContext());
@@ -156,17 +153,4 @@ public class LoadingActivity extends Activity {
 		}
 	}
 	
-	public class EntryValueComparator implements Comparator{
-		   public int compare(Object o1, Object o2) {
-		      return compare((Map.Entry)o1, (Map.Entry)o2);
-		   }
-		   public int compare(Map.Entry e1, Map.Entry e2) {
-		      int cf = ((Comparable)e1.getValue()).compareTo(e2.getValue());
-		      if (cf == 0) {
-		         cf = ((Comparable)e1.getKey()).compareTo(e2.getKey());
-		      }
-		      return cf;
-		   }
-		}
-
 }

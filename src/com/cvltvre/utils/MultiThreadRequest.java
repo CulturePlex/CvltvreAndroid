@@ -169,6 +169,7 @@ public class MultiThreadRequest implements Runnable {
 							};
 							handler.post(thread);
 							handler.sendEmptyMessage(1);
+							handler.post(new Thread(new MapMuseumUpdater(LoadingActivity.staticHandler)));
 							/*for(MuseumVO museumVO:museumVOs){
 								boolean exist=false;
 								for(MuseumVO museumVO2:LoadingActivity.museumVOs){
@@ -181,8 +182,6 @@ public class MultiThreadRequest implements Runnable {
 							
 							//LoadingActivity.museumVOs.addAll(museumVOs);
 							//handler.sendEmptyMessage(1);
-							Thread thread2= new Thread(new MapMuseumUpdater(museumVOs));
-							thread2.start();
 							}
 							//}
 						//}

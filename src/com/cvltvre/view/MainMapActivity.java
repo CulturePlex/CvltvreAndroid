@@ -3,7 +3,6 @@
  */
 package com.cvltvre.view;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
@@ -13,13 +12,11 @@ import com.cvltvre.R;
 import com.cvltvre.utils.CustomLocationListener;
 import com.cvltvre.utils.CustomMuseumOverlay;
 import com.cvltvre.utils.MapMuseumUpdater;
-import com.cvltvre.vo.MuseumVO;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
 public class MainMapActivity extends MapActivity {
 	
@@ -41,25 +38,8 @@ public class MainMapActivity extends MapActivity {
 		int longitude = (int) (CustomLocationListener.location.getLongitude() * 1000000);
 		controller.setCenter(new GeoPoint(latitude , longitude));
 		controller.setZoom(10);
-		if(mapOverlays==null){
-			mapOverlays=mapView.getOverlays();
-		}else{
-			mapOverlays=mapView.getOverlays();	
-			OverlayItem museumOverlayItem;
-			CustomMuseumOverlay customMuseumOverlay=new CustomMuseumOverlay(MapMuseumUpdater.museumDrawable);
-			for(MuseumVO museumVO:LoadingActivity.museumVOs){
-				String[] coords=museumVO.getMap_options().split(",");
-				latitude = (int) (new BigDecimal(coords[1]).doubleValue() * 1000000);
-				longitude = (int) (new BigDecimal(coords[0]).doubleValue() * 1000000);
-				museumOverlayItem=new OverlayItem(new GeoPoint(latitude, longitude), museumVO.getId(), museumVO.getId());
-				customMuseumOverlay.addOverlay(museumOverlayItem);
-			}
-			mapOverlays.add(customMuseumOverlay);
-		}
-		OverlayItem overlayItem=new OverlayItem(new GeoPoint(latitude, longitude), "user", "user");
-		MainMapActivity.personOverlay.addOverlay(overlayItem);
-		MainMapActivity.mapOverlays.add(MainMapActivity.personOverlay);
-		
+		mapOverlays=mapView.getOverlays();
+		LoadingActivity.staticHandler.post(new Thread(new MapMuseumUpdater(LoadingActivity.staticHandler)));
 		/*
  		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmap);

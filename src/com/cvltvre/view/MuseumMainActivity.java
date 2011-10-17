@@ -44,17 +44,30 @@ public class MuseumMainActivity extends Activity{
 		String distance=museumVO.getDistance().substring(0,museumVO.getDistance().indexOf(".")+2);
 		distanceView.setText(distance+" Km");
 		TextView phone=(TextView) findViewById(R.id.museumphone);
-		phone.setText(museumVO.getPhone());
+		Button buttonCall =(Button) findViewById(R.id.call);
+		Button websiteButton =(Button) findViewById(R.id.website);
+		if(museumVO.getPhone()!=null){
+			phone.setText(museumVO.getPhone());
+			buttonCall.setEnabled(true);
+		}else{
+			buttonCall.setEnabled(false);
+		}
 		TextView website=(TextView) findViewById(R.id.museumwebsite);
-		website.setText(museumVO.getWebsite());
+		if(museumVO.getWebsite()!=null){
+			website.setText(museumVO.getWebsite());
+			websiteButton.setEnabled(true);
+		}else{
+			websiteButton.setEnabled(false);
+		}
+		
 		TextView address=(TextView) findViewById(R.id.museumaddress);
 		address.setText(Html.fromHtml(museumVO.getAddress()));
 		TextView description=(TextView) findViewById(R.id.museumdescription);
 		description.setText(Html.fromHtml(museumVO.getDescription()));
 		description.setMovementMethod(new ScrollingMovementMethod());
 		
-		Button buttonCall =(Button) findViewById(R.id.call);
-		Button websiteButton =(Button) findViewById(R.id.website);
+		
+		
 		
 		buttonCall.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
